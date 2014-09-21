@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from students.models import Location
 
 def home(request):
   	if not request.user.is_authenticated():
@@ -23,4 +24,4 @@ def student_login(request, auth_form=None):
 
 @login_required
 def ride_request(request):
-	return render(request, 'ride_request.html', {})
+	return render(request, 'ride_request.html', {'locations': Location.objects.all()})

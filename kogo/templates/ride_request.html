@@ -1,6 +1,30 @@
 {% extends 'base.html' %}
 
+  {% block additional_javascript %}
+    <script type="text/javascript" src="{{STATIC_URL}}js/ride_request.js"></script>
+  {% endblock %}
+
 {% block content %}
-<p>Hello</p>
+<div class="pickup">
+	<h3>Pickup From</h3>
+	{% for loc in locations %}
+	<div class="btn-holder">
+		<button class="location-btn btn btn-lg">
+			{{loc.name}}
+		</button>
+	</div>
+  {% endfor %}
+</div>
+
+<div class="dropoff" hidden="true">
+  <h3>From <strong class="dropoff-loc"> </strong> to:</h3>
+  {% for loc in locations %}
+  <div class="btn-holder">
+    <button class="location-btn btn btn-lg">
+      {{loc.name}}
+    </button>
+  </div>
+  {% endfor %}
+</div>
 
 {% endblock %}
