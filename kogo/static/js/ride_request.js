@@ -5,6 +5,9 @@ $(document).ready(function(){
 		var pickupLoc = $(this).data("name");
 		selectDropoffScreen(pickupLoc);
 	});
+	$("div.content-holder").on( "click", "div.cancel-request-holder", function() {
+		deleteRequest();
+	});
 });
 
 
@@ -43,12 +46,21 @@ var createRequest = function(pickupLoc, dropoffLoc){
 
 var showWaitingScreen = function(html){
 	$("div.request-screens").fadeOut(function(){
-		$("div.content-holder").append(html).success(function(){
-			$("div.content-holder div.wait-background").fadeIn();
-		});
+		backToPickupScreen();
+		$("div.content-holder").append(html);
+		$("div.content-holder div.wait-background").fadeIn();
 	});
-}
+};
 
+var deleteRequest = function(){
+	$.ajax({
+		type: "POST",
+		url: "cancel_request"
+	}).success(function(){
+		$("div.wait-background").remove();
+		$("div.request-screens").show();
+	});
+};
 
 var allowForAjaxPostRequests = function(){
     function getCookie(name) {

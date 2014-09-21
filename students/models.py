@@ -29,6 +29,7 @@ class Location(models.Model):
 		new_group = RideGroup(starting_loc=request.starting_loc, 
 							  ending_loc=request.ending_loc)
 		new_group.save()
+		new_group.request_set.add(request)
 		return (group_num + 1)
 
 class RideGroup(models.Model):
@@ -37,14 +38,20 @@ class RideGroup(models.Model):
 	ending_loc = models.ForeignKey(Location, related_name='dropoff_groups')
 
 	def __unicode__(self):
-		return "from {} to {}".format(self.starting_loc, self.ending_loc)
+		names = ""
+		for request in self.request_set.all():
+			if names == "":
+				names = "{}".format(request.student.get_fullname())
+			else:
+				names = "{}, {}".format(names, request.student.get_fullname())
+		return names
 
 	def canTakeRequest(self, request):
 		return (self.starting_loc == request.starting_loc and 
 			self.ending_loc == request.ending_loc)
 
 	class Meta():
-		ordering = ["-created_at"]
+		ordering = ["created_at"]
 
 class Request(models.Model):
 	student = models.ForeignKey(StudentProfile)
@@ -55,3 +62,9 @@ class Request(models.Model):
 
 	def __unicode__(self):
 		return "Request by {}".format(self.student)
+
+	def cancel_and_possibly_remove_group(self):
+		group = self.group
+		if group.request_set.count() == 1:
+			group.delete()
+		self.delete()

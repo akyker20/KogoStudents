@@ -33,3 +33,11 @@ def ride_request(request):
 		html = render_to_string('wait_screen.html', {"group_number": group_number})
 		return HttpResponse(html)
 	return render(request, 'ride_request.html', {'locations': Location.objects.all()})
+
+@login_required
+def cancel_request(request):
+	if request.method == "POST":
+		student = request.user.studentprofile
+		most_recent_request = student.request_set.last()
+		most_recent_request.cancel_and_possibly_remove_group()
+		return HttpResponse("Success")
