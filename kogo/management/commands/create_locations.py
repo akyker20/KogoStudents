@@ -7,12 +7,16 @@ class Command(BaseCommand):
 
 	def handle(self, **options):
 		if Location.objects.count() == 0:
-			west = Location(name="West Bus Stop")
-			east = Location(name="East Bus Stop")
-			central = Location(name="Anderson St.")
-			west.save()
-			east.save()
-			central.save()
-			print "3 locations created."
+			location_names = ["West Bus Stop",
+							  "East Bus Stop",
+							  "Anderson St.",
+							  "Target",
+							  "Southpoint",
+							  "Whole Foods",
+							  "Other"]
+			for loc in location_names:
+				new_loc = Location(name=loc)
+				new_loc.save()
+			print "{} locations created.".format(len(location_names))
 		else:
 			print "Locations already exist. Remove them to run this command."

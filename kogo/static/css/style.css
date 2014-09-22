@@ -1,5 +1,9 @@
-html, body, div.btn-holder, div.btn-holder {
+html, body, div.btn-holder {
 	width: 100%;
+}
+
+html, body {
+	height: 100%;
 }
 
 nav.navbar.navbar-inverse {
@@ -10,7 +14,6 @@ nav.navbar.navbar-inverse {
 button.location-btn {
 	width: 300px;
 	margin: 20px auto;
-	padding: 70px;
 	font-size: 24px;
 	font-weight: bold;
 	display: block;
@@ -18,16 +21,21 @@ button.location-btn {
 
 button.location-btn.pickup {
 	margin: -10px auto;
+	padding: 70px;
 }
 
 h3.pickup-title, h3.dropoff-title {
-	margin-left: 20px;
+	margin-left: 80px;
 }
 
-span.glyphicon-arrow-left {
-	margin-left: 20px;
+button.back-btn {
+	margin-top: 20px;
+	margin-left: 80px;
+	font-size: 16px;
+}
+
+span.glyphicon-chevron-left {
 	font-size: 24px;
-	color: Firebrick;
 	cursor: pointer;
 }
 
@@ -37,11 +45,11 @@ div.cancel-request-holder strong {
 }
 
 div.content-holder {
-	height: 100%;
+	height: calc(100% - 50px);
 }
 
 div.wait-background {
-	background: green;
+	background: rgb(27, 180, 27);
 	margin-top: 0px;
 	height: 100%;
 	text-align: center;
@@ -131,7 +139,7 @@ form.new-student h3 {
 button.num-requests {
 	position: relative;
 	left: calc(50% + 91px);
-	top: 40px;
+	top: 30px;
 	padding: 0px 20px;
 	font-size: 24px;
 }

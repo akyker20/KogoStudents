@@ -32,6 +32,16 @@ class Location(models.Model):
 		new_group.request_set.add(request)
 		return (group_num + 1)
 
+	@staticmethod
+	def get_starting_locations():
+		return [Location.objects.get(name="West Bus Stop"),
+				Location.objects.get(name="East Bus Stop"),
+				Location.objects.get(name="Anderson St.")]
+
+	@staticmethod
+	def get_possible_dropoff_locations(location_name):
+		return Location.objects.exclude(name=location_name)
+
 class RideGroup(models.Model):
 	created_at = models.DateTimeField(auto_now=True)
 	starting_loc = models.ForeignKey(Location, related_name='pickup_groups')

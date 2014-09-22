@@ -33,7 +33,7 @@ def ride_request(request):
 		context = {"start_loc": pickup.name, "end_loc": dropoff.name, "group_number": group_number}
 		html = render_to_string('wait_screen.html', context)
 		return HttpResponse(html)
-	return render(request, 'ride_request.html', {'locations': Location.objects.all()})
+	return render(request, 'ride_request.html', {'starting_locations': Location.get_starting_locations()})
 
 @login_required
 def cancel_request(request):
@@ -47,6 +47,16 @@ def cancel_request(request):
 def student_logout(request):
   logout(request)
   return redirect('home')
+
+@login_required
+def get_destinations(request):
+	if request.is_ajax():
+		pickup_loc = request.GET['pickupLoc']
+		possible_dropoff_locs = Location.get_possible_dropoff_locations(pickup_loc)
+		context = {"dropoff_locs": possible_dropoff_locs, "pickup_loc": pickup_loc}
+		html = render_to_string('dropoff_locations.html', context)
+		return HttpResponse(html)
+
 
 def create_account(request):
 	if request.method == "POST":

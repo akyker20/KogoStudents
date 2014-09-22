@@ -8,5 +8,6 @@ urlpatterns = patterns('',
     url(r'^students/logout$', 'students.views.student_logout', name='student_logout'),
     url(r'^students/create_account$', 'students.views.create_account', name='create_account'),
     url(r'^students/ride_request$', 'students.views.ride_request', name='ride_request'),
+    url(r'^students/get_destinations', 'students.views.get_destinations', name='get_destinations'),
     url(r'^students/cancel_request$', 'students.views.cancel_request', name='cancel_request'),
 )

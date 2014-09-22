@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
 	allowForAjaxPostRequests();
 	$("div.pickup button").click(function(){
@@ -12,23 +11,34 @@ $(document).ready(function(){
 
 
 var selectDropoffScreen = function(pickupLoc){
-	$("div.dropoff strong.dropoff-loc").text(pickupLoc);
 	$("div.pickup").fadeOut(function(){
+		loadPossibleDestinations(pickupLoc);
+	});
+};
+
+var loadPossibleDestinations = function(pickupLoc){
+	$.ajax({
+		type: "GET",
+		url: "get_destinations/",
+		data: {"pickupLoc": pickupLoc}
+	}).success(function(html){
+		$("div.dropoff").append(html);
 		$("div.dropoff").fadeIn();
-			$("div.dropoff span.glyphicon-arrow-left").click(function(){
-				backToPickupScreen();
-			});
-		$("div.dropoff button").unbind('click');
-		$("div.dropoff button").click(function(){
+		$("div.dropoff span.glyphicon-arrow-left").click(function(){
+			backToPickupScreen();
+		});
+		$("div.dropoff button.location-btn").unbind('click');
+		$("div.dropoff button.location-btn").click(function(){
 			var dropoffLoc = $(this).data("name");
 			createRequest(pickupLoc, dropoffLoc);
 		});
 	});
-};
+}
 
 var backToPickupScreen = function(){
 	$("div.dropoff").fadeOut(function(){
 		$("div.pickup").fadeIn();
+		$("div.dropoff").empty();
 	});
 };
 
