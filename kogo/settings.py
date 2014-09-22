@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'kogo',
     'students',
+    'drivers',
 )
 
 MIDDLEWARE_CLASSES = (

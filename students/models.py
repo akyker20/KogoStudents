@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from drivers.models import DriverProfile
 import datetime
 
 class StudentProfile(models.Model):
@@ -43,6 +44,9 @@ class Location(models.Model):
 		return Location.objects.exclude(name=location_name)
 
 class RideGroup(models.Model):
+	STATUS_CHOICES = (('w', 'Waiting'), ('r', 'Riding'), ('c', 'Completed'))
+	status = models.CharField(max_length=8, choices=STATUS_CHOICES, default=STATUS_CHOICES[0])
+	driver = models.ForeignKey(DriverProfile, null=True, blank=True)
 	created_at = models.DateTimeField(auto_now=True)
 	starting_loc = models.ForeignKey(Location, related_name='pickup_groups')
 	ending_loc = models.ForeignKey(Location, related_name='dropoff_groups')

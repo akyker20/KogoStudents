@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from students.models import Location, Request, StudentProfile
+from kogo.helper import is_student
 
 def home(request):
   	if not request.user.is_authenticated():
@@ -15,12 +16,12 @@ def home(request):
 def student_login(request, auth_form=None):
   	if request.method == 'POST':
 		form = AuthenticateForm(data=request.POST)
-		if form.is_valid():
+		if form.is_valid() and is_student(form.get_user()):
 			login(request, form.get_user())
 			return redirect('ride_request')
 		else:
 	  		messages.error(request, "Invalid Student Username/Password")
-  	return render(request,'login.html', {'auth_form': AuthenticateForm()})
+  	return render(request,'student_login.html', {'auth_form': AuthenticateForm()})
 
 @login_required
 def ride_request(request):

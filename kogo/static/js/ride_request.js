@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	allowForAjaxPostRequests();
-	$("div.pickup button").click(function(){
+	$("div.pickup button.location-btn").click(function(){
 		var pickupLoc = $(this).data("name");
 		selectDropoffScreen(pickupLoc);
 	});

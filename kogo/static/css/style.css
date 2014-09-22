@@ -10,10 +10,19 @@ nav.navbar.navbar-inverse {
 	margin-bottom: 0px;
 }
 
+.shadow {
+	border: 1px solid LightGray;
+	box-shadow: 0px 3px 11px #202020;
+}
+
+.request-shadow {
+	box-shadow: 0px 2px 5px #202020;
+}
+
 
 button.location-btn {
 	width: 300px;
-	margin: 20px auto;
+	margin: 22px auto;
 	font-size: 24px;
 	font-weight: bold;
 	display: block;
@@ -25,7 +34,11 @@ button.location-btn.pickup {
 }
 
 h3.pickup-title, h3.dropoff-title {
-	margin-left: 80px;
+	margin-left: calc(50% - 150px);
+}
+
+h3.dropoff-title {
+	margin-top: 35px;
 }
 
 button.back-btn {
