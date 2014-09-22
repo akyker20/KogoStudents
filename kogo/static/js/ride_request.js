@@ -18,6 +18,7 @@ var selectDropoffScreen = function(pickupLoc){
 			$("div.dropoff span.glyphicon-arrow-left").click(function(){
 				backToPickupScreen();
 			});
+		$("div.dropoff button").unbind('click');
 		$("div.dropoff button").click(function(){
 			var dropoffLoc = $(this).data("name");
 			createRequest(pickupLoc, dropoffLoc);

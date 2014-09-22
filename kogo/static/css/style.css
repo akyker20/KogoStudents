@@ -1,6 +1,5 @@
-html, body, div.btn-holder {
+html, body, div.btn-holder, div.btn-holder {
 	width: 100%;
-	height: 100%;
 }
 
 nav.navbar.navbar-inverse {
@@ -8,13 +7,17 @@ nav.navbar.navbar-inverse {
 }
 
 
-.location-btn {
+button.location-btn {
 	width: 300px;
-	margin: 25px auto;
+	margin: 20px auto;
 	padding: 70px;
 	font-size: 24px;
 	font-weight: bold;
 	display: block;
+}
+
+button.location-btn.pickup {
+	margin: -10px auto;
 }
 
 h3.pickup-title, h3.dropoff-title {
@@ -45,22 +48,90 @@ div.wait-background {
 }
 
 div.wait-background h1{
-	padding-top: 200px;
+	padding-top: 100px;
 	color: white;
-	font-size: 300px;
+	font-size: 320px;
 	margin-top: 0px;
 }
 
 
 div.cancel-request-holder {
-	margin-top: 50px;
+	margin-top: 70px;
 	text-align: center;
 	width: 100%;
-	font-size: 40px;
-	color: white;
+	font-size: 24px;
 	cursor: pointer;
 }
 
 div.cancel-request-holder span {
 	color: Firebrick;
+}
+
+div.request-summary-holder {
+	padding-top: 30px;
+	font-size: 24px;
+}
+
+
+/* Login Form */
+
+input {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+li.error {
+	color: #D00000;
+}
+
+.login-form-container {
+	width: 300px;
+	margin: 80px auto;
+}
+
+div.input-group-addon{
+	border-radius: 5px !important;
+	border: 1px solid #ccc !important;
+}
+
+ul.nav li {
+	float: right;
+	font-size: 1.2em;
+}
+
+a.new-to-kogo {
+	float: right;
+	font-size: 18px;
+	margin-top: 10px;
+}
+
+form.new-student {
+	margin: 40px auto;
+	width: 300px;
+}
+
+form.new-student h3 {
+	margin-bottom: 30px;
+}
+
+
+button.num-requests {
+	position: relative;
+	left: calc(50% + 91px);
+	top: 40px;
+	padding: 0px 20px;
+	font-size: 24px;
 }
