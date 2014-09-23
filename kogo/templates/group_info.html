@@ -1,0 +1,10 @@
+<div class="wait-background group-info">
+	<div class="request-summary-holder">
+		<span class="glyphicon glyphicon-road"></span>
+		From <strong>{{group.starting_loc.name}}</strong> to <strong>{{group.ending_loc.name}}</strong>
+	</div>
+	{% for request in requests %}
+		{{request.student}}
+	{% endfor %}
+	
+</div>

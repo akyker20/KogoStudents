@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block additional_javascript %}
+<script type="text/javascript" src="{{STATIC_URL}}js/driver.js"></script>
+{% endblock %}
+
+  {% block navbar_content %}
+  <ul class="nav navbar-nav">
+  	{% for loc in starting_locations %}
+  	<li><a href="#">{{loc.name}}</a></li>
+  	{% endfor %}
+    <li><a href="{% url 'student_logout'%}">Logout</a></li>
+  </ul>
+{% endblock %}
+
+{% block content %}
+<div class="content-holder">
+  <div class="driver-select-group">
+  <h3>{{base_location.name}}</h3>
+   {% for group in groups %}
+    <div class="btn-holder">
+      <button class="location-btn dropoff shadow btn btn-lg" data-id="{{group.id}}">
+        {{group.ending_loc}}
+        <span class="glyphicon glyphicon-ok hidden"></span>
+      </button> 
+     </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

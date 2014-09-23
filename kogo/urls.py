@@ -11,4 +11,6 @@ urlpatterns = patterns('',
     url(r'^students/get_destinations', 'students.views.get_destinations', name='get_destinations'),
     url(r'^students/cancel_request$', 'students.views.cancel_request', name='cancel_request'),
     url(r'^drivers/login$', 'drivers.views.driver_login', name='driver_login'),
+    url(r'^drivers/driving_view$', 'drivers.views.driver_view', name='driver_view'),
+    url(r'^drivers/get_group_info', 'drivers.views.get_group_info', name='get_group_info'),
 )
