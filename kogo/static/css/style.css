@@ -2,6 +2,14 @@ html, body, div.btn-holder {
 	width: 100%;
 }
 
+body{
+	background: url(../images/background.jpg) no-repeat center center fixed; 
+  	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+}
+
 html, body {
 	height: 100%;
 }
@@ -20,11 +28,10 @@ nav.navbar.navbar-inverse {
 }
 
 
-button.location-btn {
+button.location-btn, button.student {
 	width: 300px;
 	margin: 22px auto;
 	font-size: 24px;
-	font-weight: bold;
 	display: block;
 }
 
@@ -37,14 +44,20 @@ h3.pickup-title, h3.dropoff-title {
 	margin-left: calc(50% - 150px);
 }
 
+h3.pickup-title {
+	margin-bottom: 0px;
+	font-weight: bold;
+}
+
 h3.dropoff-title {
 	margin-top: 35px;
 }
 
 button.back-btn {
 	margin-top: 20px;
-	margin-left: 80px;
+	margin-left: calc(50% - 150px);
 	font-size: 16px;
+	width: 86px;
 }
 
 span.glyphicon-chevron-left {

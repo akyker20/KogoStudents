@@ -3,6 +3,12 @@ $(document).ready(function(){
 	$("button.dropoff:first").click(function(){
 		showStartRideScreen($(this).data("id"));
 	});
+	$("div.content-holder").on("click", "button.student", function(){
+		$(this).find("span.glyphicon-ok").removeClass("hidden");
+		if(allNamesAreChecked()===true){
+			alert("All names are checked");
+		}
+	});
 });
 
 var showStartRideScreen = function(id){
@@ -16,4 +22,14 @@ var showStartRideScreen = function(id){
 			$("div.group-info").fadeIn();
 		});
 	});
+};
+
+var allNamesAreChecked = function() {
+	$("span.glyphicon-ok").each(function(index){
+		if($(this).hasClass("hidden")){
+			alert("Returning false");
+			return false;
+		}
+	});
+	return true;
 };

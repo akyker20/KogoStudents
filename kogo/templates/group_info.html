@@ -4,7 +4,12 @@
 		From <strong>{{group.starting_loc.name}}</strong> to <strong>{{group.ending_loc.name}}</strong>
 	</div>
 	{% for request in requests %}
-		{{request.student}}
+	<div class="btn-holder">
+	    <button class="student shadow btn btn-lg" data-name="{{loc.name}}">
+	      {{request.student}}
+	      <span class="glyphicon glyphicon-ok hidden"></span>
+	    </button>
+  	</div>
 	{% endfor %}
 	
 </div>
