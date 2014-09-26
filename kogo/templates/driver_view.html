@@ -9,7 +9,7 @@
   	{% for loc in starting_locations %}
   	<li><a href="#">{{loc.name}}</a></li>
   	{% endfor %}
-    <li><a href="{% url 'student_logout'%}">Logout</a></li>
+    <li><a href="{% url 'logout_user'%}">Logout</a></li>
   </ul>
 {% endblock %}
 

@@ -20,7 +20,7 @@ def driver_login(request, auth_form=None):
 def driver_view(request):
 	starting_locations = Location.get_starting_locations()
 	base_location = starting_locations[0]
-	groups = base_location.pickup_groups.all()
+	groups = base_location.pickup_groups.filter(status='w').all()
 	context = {'base_location': base_location, 'starting_locations': starting_locations, "groups": groups}
 	return render(request, 'driver_view.html', context)
 
@@ -30,7 +30,7 @@ def get_group_info(request):
 		group = RideGroup.objects.get(pk=int(request.GET['id']))
 		requests = group.request_set.all()
 		context = {'group': group, 'requests': requests}
-		html = render_to_string('group_info.html', context)
+		html = render_to_string('group_info.html', context_instance=RequestContext(request))
 		return HttpResponse(html)
 
 @login_required
@@ -39,4 +39,19 @@ def start_ride(request):
 		group = RideGroup.objects.get(pk=request.POST['group_id'])
 		group.start_ride()
 		return HttpResponse("Success")
+
+@login_required
+def start_ride(request):
+	if request.is_ajax() and request.method == "POST":
+		group = RideGroup.objects.get(pk=request.POST['group_id'])
+		group.start_ride()
+		return HttpResponse("Success")
+
+@login_required
+def end_ride(request):
+	if request.is_ajax() and request.method == "POST":
+		group = RideGroup.objects.get(pk=request.POST['group_id'])
+		group.end_ride()
+		return HttpResponse("Success")
+
 

@@ -143,7 +143,7 @@ div.input-group-addon{
 }
 
 ul.nav li {
-	float: right;
+	text-align: right;
 	font-size: 1.2em;
 }
 

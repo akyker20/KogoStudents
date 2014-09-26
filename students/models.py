@@ -64,6 +64,10 @@ class RideGroup(models.Model):
 		self.status = 'r'
 		self.save()
 
+	def end_ride(self):
+		self.status = 'c'
+		self.save()
+
 	def canTakeRequest(self, request):
 		return (self.starting_loc == request.starting_loc and 
 			self.ending_loc == request.ending_loc)

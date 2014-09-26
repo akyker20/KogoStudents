@@ -29,6 +29,17 @@ $(document).ready(function(){
 			});
 		});
 	});
+	$("div.content-holder").on("click", "button.end-ride", function(){
+		$.ajax({
+			type: "POST",
+			url: "end_ride",
+			data: {"group_id": $(this).data("group-id")}
+		}).success(function(){
+			$("div.during-ride-holder").fadeOut(function(){
+				$("div.during-ride-container").fadeIn();
+			});
+		});
+	});
 });
 
 var showStartRideScreen = function(id){

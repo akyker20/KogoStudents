@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 
+{% block navbar_content %}
+  <ul class="nav navbar-nav">
+    <li><a href="{% url 'student_login'%}">Student Login</a></li>
+    <li><a href="{% url 'driver_login'%}">Driver Login</a></li>
+  </ul>
+{% endblock %}
+
+
 {% block content %}
 
 <form class="new-student" action="{% url 'create_account' %}" method="post">
