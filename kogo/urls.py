@@ -13,4 +13,5 @@ urlpatterns = patterns('',
     url(r'^drivers/login$', 'drivers.views.driver_login', name='driver_login'),
     url(r'^drivers/driving_view$', 'drivers.views.driver_view', name='driver_view'),
     url(r'^drivers/get_group_info', 'drivers.views.get_group_info', name='get_group_info'),
+    url(r'^drivers/start_ride$', 'drivers.views.start_ride', name='start_ride')
 )

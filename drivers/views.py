@@ -33,3 +33,10 @@ def get_group_info(request):
 		html = render_to_string('group_info.html', context)
 		return HttpResponse(html)
 
+@login_required
+def start_ride(request):
+	if request.is_ajax() and request.method == "POST":
+		group = RideGroup.objects.get(pk=request.POST['group_id'])
+		group.start_ride()
+		return HttpResponse("Success")
+

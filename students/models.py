@@ -20,7 +20,7 @@ class Location(models.Model):
 		return self.name
 
 	def update_groups(self, request):
-		groups = self.pickup_groups.all()
+		groups = self.pickup_groups.filter(status='w')
 		group_num = 0
 		for group in groups:
 			group_num += 1 
@@ -45,7 +45,7 @@ class Location(models.Model):
 
 class RideGroup(models.Model):
 	STATUS_CHOICES = (('w', 'Waiting'), ('r', 'Riding'), ('c', 'Completed'))
-	status = models.CharField(max_length=8, choices=STATUS_CHOICES, default=STATUS_CHOICES[0])
+	status = models.CharField(max_length=8, default='w', choices=STATUS_CHOICES)
 	driver = models.ForeignKey(DriverProfile, null=True, blank=True)
 	created_at = models.DateTimeField(auto_now=True)
 	starting_loc = models.ForeignKey(Location, related_name='pickup_groups')
@@ -59,6 +59,10 @@ class RideGroup(models.Model):
 			else:
 				names = "{}, {}".format(names, request.student.get_fullname())
 		return names
+
+	def start_ride(self):
+		self.status = 'r'
+		self.save()
 
 	def canTakeRequest(self, request):
 		return (self.starting_loc == request.starting_loc and 

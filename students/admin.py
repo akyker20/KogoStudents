@@ -6,7 +6,7 @@ class RequestAdmin(admin.ModelAdmin):
 	list_display = ('student', 'time', 'starting_loc','ending_loc', 'group')
 
 class RideGroupAdmin(admin.ModelAdmin):
-	list_display = ('created_at', 'starting_loc', 'ending_loc', 'students')
+	list_display = ('created_at', 'starting_loc', 'ending_loc', 'students', 'status')
 
 	def students(self, obj):
 		return obj.__unicode__()
