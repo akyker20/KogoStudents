@@ -14,10 +14,17 @@ class StudentProfile(models.Model):
 		return "%s %s" % (self.user.first_name, self.user.last_name)
 
 	def is_waiting_in_group(self):
+		group = self.get_group()
+		if group is None:
+			return False
 		return self.get_group().status == 'w'
 
 	def get_group(self):
 		return self.groups.first()
+
+	def remove_recent_request(self):	
+		last_request = self.request_set.last()
+		last_request.cancel_and_possibly_remove_group()
 
 
 
@@ -69,6 +76,7 @@ class RideGroup(models.Model):
 		for group in groups:
 			if (group.request_set.count() < 4) and group.canTakeRequest(request):
 				group.request_set.add(request)
+				return
 		new_group = RideGroup(pickup_loc=request.pickup_loc, 
 							  dropoff_loc=request.dropoff_loc)
 		new_group.save()

@@ -18,19 +18,20 @@ def student_login(request, auth_form=None):
 		form = AuthenticateForm(data=request.POST)
 		if form.is_valid() and is_student(form.get_user()):
 			login(request, form.get_user())
-			return redirect('ride_request')
+			return redirect('pickup_locations')
 		else:
 	  		messages.error(request, "Invalid Student Username/Password")
   	return render(request,'students/student_login.html', {'auth_form': AuthenticateForm()})
 
 @login_required
 def pickup_locations(request):
+	student = request.user.studentprofile
+	if student.is_waiting_in_group():
+		return redirect('wait_screen')
 	return render(request, 'students/pickup_locations.html', {'starting_locations': Location.get_starting_locations()})
 
 @login_required
 def dropoff_locations(request):
-	if student.is_waiting_in_group():
-		return redirect('wait_screen')
 	pickup_loc = request.GET['pickup']
 	possible_dropoff_locs = Location.get_possible_dropoff_locations(pickup_loc)
 	context = {"dropoff_locs": possible_dropoff_locs, "pickup_loc": pickup_loc}
@@ -38,6 +39,9 @@ def dropoff_locations(request):
 
 @login_required
 def request_ride(request):
+	student = request.user.studentprofile
+	if student.is_waiting_in_group():
+		student.remove_recent_request()
 	if request.method == "POST":
 		pickup = Location.objects.get(name=request.POST["pickup"])
 		dropoff = Location.objects.get(name=request.POST["dropoff"])
@@ -62,8 +66,7 @@ def wait_screen(request):
 def cancel_request(request):
 	if request.method == "POST":
 		student = request.user.studentprofile
-		most_recent_request = student.request_set.last()
-		most_recent_request.cancel_and_possibly_remove_group()
+		student.remove_recent_request()
 	return redirect('pickup_locations')
 
 def create_account(request):

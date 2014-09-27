@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
+  {% block navbar_content %}
+    <ul class="nav navbar-nav">
+      <li><a href="{% url 'logout_user'%}">Logout</a></li>
+    </ul>
+  {% endblock %}
+  
 {% block content %}
 
   <h3 class="dropoff-title">From <strong class="dropoff-loc"> {{ pickup_loc }}</strong> to:</h3>
