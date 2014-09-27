@@ -13,25 +13,22 @@ class StudentProfile(models.Model):
 	def get_fullname(self):
 		return "%s %s" % (self.user.first_name, self.user.last_name)
 
+	def is_waiting_in_group(self):
+		return self.get_group().status == 'w'
+
+	def get_group(self):
+		return self.groups.first()
+
+
+
+
+
+
 class Location(models.Model):
 	name = models.CharField(max_length=16)
 
 	def __unicode__(self):
 		return self.name
-
-	def update_groups(self, request):
-		groups = self.pickup_groups.filter(status='w')
-		group_num = 0
-		for group in groups:
-			group_num += 1 
-			if (group.request_set.count() < 4) and group.canTakeRequest(request):
-				group.request_set.add(request)
-				return group_num
-		new_group = RideGroup(starting_loc=request.starting_loc, 
-							  ending_loc=request.ending_loc)
-		new_group.save()
-		new_group.request_set.add(request)
-		return (group_num + 1)
 
 	@staticmethod
 	def get_starting_locations():
@@ -43,13 +40,19 @@ class Location(models.Model):
 	def get_possible_dropoff_locations(location_name):
 		return Location.objects.exclude(name=location_name)
 
+
+
+
+
+
 class RideGroup(models.Model):
+	students = models.ManyToManyField(StudentProfile, through='Request', related_name='groups')
 	STATUS_CHOICES = (('w', 'Waiting'), ('r', 'Riding'), ('c', 'Completed'))
 	status = models.CharField(max_length=8, default='w', choices=STATUS_CHOICES)
 	driver = models.ForeignKey(DriverProfile, null=True, blank=True)
 	created_at = models.DateTimeField(auto_now=True)
-	starting_loc = models.ForeignKey(Location, related_name='pickup_groups')
-	ending_loc = models.ForeignKey(Location, related_name='dropoff_groups')
+	pickup_loc = models.ForeignKey(Location, related_name='pickup_groups')
+	dropoff_loc = models.ForeignKey(Location, related_name='dropoff_groups')
 
 	def __unicode__(self):
 		names = ""
@@ -60,6 +63,24 @@ class RideGroup(models.Model):
 				names = "{}, {}".format(names, request.student.get_fullname())
 		return names
 
+	@staticmethod
+	def build_group(request):
+		groups = RideGroup.objects.filter(dropoff_loc=request.dropoff_loc, status='w')
+		for group in groups:
+			if (group.request_set.count() < 4) and group.canTakeRequest(request):
+				group.request_set.add(request)
+		new_group = RideGroup(pickup_loc=request.pickup_loc, 
+							  dropoff_loc=request.dropoff_loc)
+		new_group.save()
+		new_group.request_set.add(request)
+
+	@staticmethod
+	def get_group_number(group):
+		competing_groups = RideGroup.objects.filter(dropoff_loc=group.dropoff_loc).all()
+		for index, item in enumerate(competing_groups):
+			if item == group:
+				return (index+1)
+
 	def start_ride(self):
 		self.status = 'r'
 		self.save()
@@ -69,16 +90,20 @@ class RideGroup(models.Model):
 		self.save()
 
 	def canTakeRequest(self, request):
-		return (self.starting_loc == request.starting_loc and 
-			self.ending_loc == request.ending_loc)
+		return (self.pickup_loc == request.pickup_loc and 
+			self.dropoff_loc == request.dropoff_loc)
 
 	class Meta():
 		ordering = ["created_at"]
 
+
+
+
+
 class Request(models.Model):
 	student = models.ForeignKey(StudentProfile)
-	starting_loc = models.ForeignKey(Location, related_name='starting_location')
-	ending_loc = models.ForeignKey(Location, related_name='ending_location')
+	pickup_loc = models.ForeignKey(Location, related_name='starting_location')
+	dropoff_loc = models.ForeignKey(Location, related_name='ending_location')
 	group = models.ForeignKey(RideGroup, null=True, blank=True)
 	time = models.DateTimeField(auto_now=True)
 

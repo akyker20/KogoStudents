@@ -5,7 +5,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-from students.models import Location, Request, StudentProfile
+from students.models import Location, Request, RideGroup, StudentProfile
 from kogo.helper import is_student
 
 def home(request):
@@ -29,6 +29,8 @@ def pickup_locations(request):
 
 @login_required
 def dropoff_locations(request):
+	if student.is_waiting_in_group():
+		return redirect('wait_screen')
 	pickup_loc = request.GET['pickup']
 	possible_dropoff_locs = Location.get_possible_dropoff_locations(pickup_loc)
 	context = {"dropoff_locs": possible_dropoff_locs, "pickup_loc": pickup_loc}
@@ -39,10 +41,19 @@ def request_ride(request):
 	if request.method == "POST":
 		pickup = Location.objects.get(name=request.POST["pickup"])
 		dropoff = Location.objects.get(name=request.POST["dropoff"])
-		new_request = Request(student=request.user.studentprofile, starting_loc=pickup, ending_loc=dropoff)
+		new_request = Request(student=request.user.studentprofile, pickup_loc=pickup, dropoff_loc=dropoff)
 		new_request.save()
-		group_number = pickup.update_groups(new_request)
-		context = {"start_loc": pickup.name, "end_loc": dropoff.name, 
+		RideGroup.build_group(new_request)
+		return redirect('wait_screen')
+	return redirect('pickup_locations')
+
+@login_required
+def wait_screen(request):
+	student = request.user.studentprofile
+	if student.is_waiting_in_group():
+		group = student.get_group()
+		group_number = RideGroup.get_group_number(group)
+		context = {"start_loc": group.pickup_loc.name, "end_loc": group.dropoff_loc.name, 
 				   "group_number": group_number}
 		return render(request, 'students/wait_screen.html', context)
 	return redirect('pickup_locations')

@@ -3,12 +3,12 @@ from models import StudentProfile, Request, RideGroup, Location
 
 
 class RequestAdmin(admin.ModelAdmin):
-	list_display = ('student', 'time', 'starting_loc','ending_loc', 'group')
+	list_display = ('student', 'time', 'pickup_loc','dropoff_loc', 'group')
 
 class RideGroupAdmin(admin.ModelAdmin):
-	list_display = ('created_at', 'starting_loc', 'ending_loc', 'students', 'status')
+	list_display = ('created_at', 'pickup_loc', 'dropoff_loc', 'riders', 'status')
 
-	def students(self, obj):
+	def riders(self, obj):
 		return obj.__unicode__()
 
 admin.site.register(StudentProfile)
