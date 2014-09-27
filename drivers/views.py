@@ -30,19 +30,13 @@ def get_group_info(request):
 		group = RideGroup.objects.get(pk=int(request.GET['id']))
 		requests = group.request_set.all()
 		context = {'group': group, 'requests': requests}
-		html = render_to_string('group_info.html', context_instance=RequestContext(request))
+		html = render_to_string('group_info.html', context)
 		return HttpResponse(html)
 
 @login_required
 def start_ride(request):
 	if request.is_ajax() and request.method == "POST":
-		group = RideGroup.objects.get(pk=request.POST['group_id'])
-		group.start_ride()
-		return HttpResponse("Success")
-
-@login_required
-def start_ride(request):
-	if request.is_ajax() and request.method == "POST":
+		import pdb; pdb.set_trace();
 		group = RideGroup.objects.get(pk=request.POST['group_id'])
 		group.start_ride()
 		return HttpResponse("Success")

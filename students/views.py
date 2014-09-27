@@ -45,11 +45,6 @@ def cancel_request(request):
 		return HttpResponse("Success")
 
 @login_required
-def student_logout(request):
-  logout(request)
-  return redirect('home')
-
-@login_required
 def get_destinations(request):
 	if request.is_ajax():
 		pickup_loc = request.GET['pickupLoc']

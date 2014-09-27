@@ -35,8 +35,8 @@ $(document).ready(function(){
 			url: "end_ride",
 			data: {"group_id": $(this).data("group-id")}
 		}).success(function(){
-			$("div.during-ride-holder").fadeOut(function(){
-				$("div.during-ride-container").fadeIn();
+			$("div.group-info").fadeOut(function(){
+				alert("Success");
 			});
 		});
 	});
