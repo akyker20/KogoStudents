@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h3 class="dropoff-title">From <strong class="dropoff-loc"> {{ pickup_loc }}</strong> to:</h3>
+  <div class="dropoff-buttons-container">
+    {% for loc in dropoff_locs %}
+    <div class="btn-holder">
+      <form method="post" action="{% url 'request_ride' %}">
+        {% csrf_token %}
+        <input type="hidden" name="pickup" value="{{pickup_loc}}">
+        <input type="hidden" name="dropoff" value="{{loc.name}}">
+        <button class="location-btn dropoff shadow btn btn-lg">
+          {{loc.name}}
+        </button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+
+{% endblock %}

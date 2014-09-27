@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+  {% block navbar_content %}
+  <ul class="nav navbar-nav">
+    <li><a href="{% url 'logout_user'%}">Logout</a></li>
+  </ul>
+  {% endblock %}
+
+{% block content %}
+{% load student_tags %}
+<div class="content-holder">
+  <div class="request-screens">
+    <div class="pickup">
+    	<h3 class="pickup-title">Pickup from:</h3>
+      	{% for loc in starting_locations %}
+      	<div class="btn-holder">
+          <button class="btn btn-danger num-requests request-shadow">{{loc|num_active_requests}}</button>
+          <form method="get" action="{% url 'dropoff_locations' %}">
+            <input type="hidden" name="pickup" value="{{loc.name}}">
+        		<button type="submit" class="shadow location-btn pickup btn btn-lg">
+        			{{loc.name}}
+        		</button>
+          </form>
+      	</div>
+        {% endfor %}
+    </div>
+    <div class="dropoff" hidden="true"></div>
+  </div class="request-screens">
+</div class="content-holder">
+
+{% endblock %}

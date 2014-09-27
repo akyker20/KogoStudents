@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="wait-background">
+	<div class="request-summary-holder">
+		<span class="glyphicon glyphicon-road"></span>
+		From <strong>{{start_loc}}</strong> to <strong>{{end_loc}}</strong>
+	</div>
+	<h1>{{group_number}}</h1>
+	<form method="post" action="{% url 'cancel_request' %}">
+		{% csrf_token %}
+		<button type="submit" class="cancel-request-holder">
+			<span class="glyphicon glyphicon-remove"></span>
+			<strong>Cancel Request</strong>
+		</button>
+	</form>
+</div>
+
+{% endblock %}

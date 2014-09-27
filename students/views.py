@@ -11,7 +11,7 @@ from kogo.helper import is_student
 def home(request):
   	if not request.user.is_authenticated():
 		return redirect('student_login')
-  	return redirect('ride_request')
+  	return redirect('pickup_locations')
 
 def student_login(request, auth_form=None):
   	if request.method == 'POST':
@@ -21,20 +21,31 @@ def student_login(request, auth_form=None):
 			return redirect('ride_request')
 		else:
 	  		messages.error(request, "Invalid Student Username/Password")
-  	return render(request,'student_login.html', {'auth_form': AuthenticateForm()})
+  	return render(request,'students/student_login.html', {'auth_form': AuthenticateForm()})
 
 @login_required
-def ride_request(request):
+def pickup_locations(request):
+	return render(request, 'students/pickup_locations.html', {'starting_locations': Location.get_starting_locations()})
+
+@login_required
+def dropoff_locations(request):
+	pickup_loc = request.GET['pickup']
+	possible_dropoff_locs = Location.get_possible_dropoff_locations(pickup_loc)
+	context = {"dropoff_locs": possible_dropoff_locs, "pickup_loc": pickup_loc}
+	return render(request, 'students/dropoff_locations.html', context)
+
+@login_required
+def request_ride(request):
 	if request.method == "POST":
-		pickup = Location.objects.get(name=request.POST["pickupLoc"])
-		dropoff = Location.objects.get(name=request.POST["dropoffLoc"])
+		pickup = Location.objects.get(name=request.POST["pickup"])
+		dropoff = Location.objects.get(name=request.POST["dropoff"])
 		new_request = Request(student=request.user.studentprofile, starting_loc=pickup, ending_loc=dropoff)
 		new_request.save()
 		group_number = pickup.update_groups(new_request)
-		context = {"start_loc": pickup.name, "end_loc": dropoff.name, "group_number": group_number}
-		html = render_to_string('wait_screen.html', context)
-		return HttpResponse(html)
-	return render(request, 'ride_request.html', {'starting_locations': Location.get_starting_locations()})
+		context = {"start_loc": pickup.name, "end_loc": dropoff.name, 
+				   "group_number": group_number}
+		return render(request, 'students/wait_screen.html', context)
+	return redirect('pickup_locations')
 
 @login_required
 def cancel_request(request):
@@ -42,17 +53,7 @@ def cancel_request(request):
 		student = request.user.studentprofile
 		most_recent_request = student.request_set.last()
 		most_recent_request.cancel_and_possibly_remove_group()
-		return HttpResponse("Success")
-
-@login_required
-def get_destinations(request):
-	if request.is_ajax():
-		pickup_loc = request.GET['pickupLoc']
-		possible_dropoff_locs = Location.get_possible_dropoff_locations(pickup_loc)
-		context = {"dropoff_locs": possible_dropoff_locs, "pickup_loc": pickup_loc}
-		html = render_to_string('dropoff_locations.html', context)
-		return HttpResponse(html)
-
+	return redirect('pickup_locations')
 
 def create_account(request):
 	if request.method == "POST":
