@@ -76,7 +76,7 @@ def create_account(request):
 			return render(request,'create_account.html', {'create_account_form': form})
 	context =  {'create_account_form': NewStudentForm()}
 	return render(request,'create_account.html', context)
-	
+
 @login_required
 @require_student
 def wait_screen(request):
