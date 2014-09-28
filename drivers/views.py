@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from students.models import Location, RideGroup
+from django.contrib import messages
 from kogo.forms import AuthenticateForm
 from django.template.loader import render_to_string
 from django.http import HttpResponse
 from kogo.helper import is_driver
+from decorators import require_driver
 
 def driver_login(request, auth_form=None):
   	if request.method == 'POST':
@@ -18,6 +20,7 @@ def driver_login(request, auth_form=None):
   	return render(request,'drivers/driver_login.html', {'auth_form': AuthenticateForm()})
 
 @login_required
+@require_driver
 def get_location_groups(request):
 	if request.is_ajax():
 		location = Location.objects.get(name=request.GET['location'])
@@ -29,6 +32,7 @@ def get_location_groups(request):
 
 
 @login_required
+@require_driver
 def group_selection_screen(request):
 	starting_locations = Location.get_starting_locations()
 	location_name = request.GET.get('location')
@@ -41,6 +45,7 @@ def group_selection_screen(request):
 	return render(request, 'drivers/group_selection.html', context)
 
 @login_required
+@require_driver
 def select_group(request):
 	group = RideGroup.objects.get(pk=int(request.GET['groupID']))
 	requests = group.request_set.all()
@@ -48,6 +53,7 @@ def select_group(request):
 	return render(request, 'drivers/ride_screen.html', context)
 
 @login_required
+@require_driver
 def start_ride(request):
 	if request.is_ajax() and request.method == "POST":
 		group = RideGroup.objects.get(pk=request.POST['group_id'])
@@ -55,6 +61,7 @@ def start_ride(request):
 		return HttpResponse("Success")
 
 @login_required
+@require_driver
 def end_ride(request):
 	if request.method == "POST":
 		group = RideGroup.objects.get(pk=request.POST['groupID'])

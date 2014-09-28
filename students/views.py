@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 from students.models import Location, Request, RideGroup, StudentProfile
 from kogo.helper import is_student
+from decorators import require_student
 
 def student_login(request, auth_form=None):
   	if request.method == 'POST':
@@ -19,6 +20,7 @@ def student_login(request, auth_form=None):
   	return render(request,'students/student_login.html', {'auth_form': AuthenticateForm()})
 
 @login_required
+@require_student
 def pickup_locations(request):
 	student = request.user.studentprofile
 	if student.is_waiting_in_group():
@@ -26,6 +28,7 @@ def pickup_locations(request):
 	return render(request, 'students/pickup_locations.html', {'starting_locations': Location.get_starting_locations()})
 
 @login_required
+@require_student
 def dropoff_locations(request):
 	pickup_loc = request.GET['pickup']
 	possible_dropoff_locs = Location.get_possible_dropoff_locations(pickup_loc)
@@ -33,6 +36,7 @@ def dropoff_locations(request):
 	return render(request, 'students/dropoff_locations.html', context)
 
 @login_required
+@require_student
 def request_ride(request):
 	student = request.user.studentprofile
 	if student.is_waiting_in_group():
@@ -46,18 +50,9 @@ def request_ride(request):
 		return redirect('wait_screen')
 	return redirect('pickup_locations')
 
-@login_required
-def wait_screen(request):
-	student = request.user.studentprofile
-	if student.is_waiting_in_group():
-		group = student.get_group()
-		group_number = RideGroup.get_group_number(group)
-		context = {"start_loc": group.pickup_loc.name, "end_loc": group.dropoff_loc.name, 
-				   "group_number": group_number}
-		return render(request, 'students/wait_screen.html', context)
-	return redirect('pickup_locations')
 
 @login_required
+@require_student
 def cancel_request(request):
 	if request.method == "POST":
 		student = request.user.studentprofile
@@ -81,3 +76,15 @@ def create_account(request):
 			return render(request,'create_account.html', {'create_account_form': form})
 	context =  {'create_account_form': NewStudentForm()}
 	return render(request,'create_account.html', context)
+	
+@login_required
+@require_student
+def wait_screen(request):
+	student = request.user.studentprofile
+	if student.is_waiting_in_group():
+		group = student.get_group()
+		group_number = RideGroup.get_group_number(group)
+		context = {"start_loc": group.pickup_loc.name, "end_loc": group.dropoff_loc.name, 
+				   "group_number": group_number}
+		return render(request, 'students/wait_screen.html', context)
+	return redirect('pickup_locations')
