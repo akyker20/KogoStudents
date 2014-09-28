@@ -1,1 +1,1 @@
-web: gunicorn ad_service.wsgi --log-file -
+web: gunicorn kogo.wsgi --log-file -
