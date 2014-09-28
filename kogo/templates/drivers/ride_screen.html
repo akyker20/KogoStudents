@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block additional_javascript %}
+<script type="text/javascript" src="{{STATIC_URL}}js/driver.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="content-holder">
+	<div class="wait-background group-info">
+		<div class="request-summary-holder push-down">
+			<span class="glyphicon glyphicon-road"></span>
+			From <strong>{{group.pickup_loc.name}}</strong> to <strong>{{group.dropoff_loc.name}}</strong>
+		</div>
+		<div class="start-ride-holder">
+			{% for request in requests %}
+			<div class="btn-holder">
+			    <button class="student shadow btn btn-lg" data-name="{{loc.name}}">
+			      {{request.student}}
+			      <span class="glyphicon glyphicon-ok hidden"></span>
+			    </button>
+		  	</div>
+			{% endfor %}
+			<button style="display: none" class="shadow start-ride btn btn-lg" data-group-id="{{group.id}}">Start Ride
+			</button>
+		</div>
+		<div class="during-ride-container" hidden="true">
+			<h2 class="ride-in-progress">Ride in Progress</h2>
+			<form method="post" action="{% url 'end_ride' %}">
+				{% csrf_token %}
+				<input type="hidden" name="groupID" value="{{group.id}}">
+				<button class="shadow end-ride btn btn-lg">
+					Ride Completed
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

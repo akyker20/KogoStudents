@@ -20,7 +20,7 @@ class StudentProfile(models.Model):
 		return self.get_group().status == 'w'
 
 	def get_group(self):
-		return self.groups.first()
+		return self.groups.last()
 
 	def remove_recent_request(self):	
 		last_request = self.request_set.last()

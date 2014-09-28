@@ -8,11 +8,6 @@ from django.template.loader import render_to_string
 from students.models import Location, Request, RideGroup, StudentProfile
 from kogo.helper import is_student
 
-def home(request):
-  	if not request.user.is_authenticated():
-		return redirect('student_login')
-  	return redirect('pickup_locations')
-
 def student_login(request, auth_form=None):
   	if request.method == 'POST':
 		form = AuthenticateForm(data=request.POST)

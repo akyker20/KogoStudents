@@ -1,0 +1,19 @@
+<div class="driver-select-group">
+    {% if groups %}
+  <h3 class="dropoff-title">From <strong class="dropoff-loc"> {{ location.name }}</strong> to:</h3>
+   {% for group in groups %}
+    <div class="btn-holder">
+      <form type="get" action="{% url 'select_group' %}">
+        <input type="hidden" name="groupID" value="{{group.id}}">
+        <button class="location-btn dropoff shadow btn btn-lg">
+          {{group.dropoff_loc}}
+        </button>
+      </form> 
+     </div>
+    {% endfor %}
+    {% else %}
+    <p class="no-requests">
+      There are currently no requests from {{location.name}}. You have the freedom to go to another location. Please remember that just because there are no requests does not mean there are not students looking for a ride!
+    </p>
+    {% endif %}
+  </div>
