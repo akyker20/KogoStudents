@@ -48,15 +48,6 @@ def select_group(request):
 	return render(request, 'drivers/ride_screen.html', context)
 
 @login_required
-def get_group_info(request):
-	if request.is_ajax():
-		group = RideGroup.objects.get(pk=int(request.GET['id']))
-		requests = group.request_set.all()
-		context = {'group': group, 'requests': requests}
-		html = render_to_string('group_info.html', context)
-		return HttpResponse(html)
-
-@login_required
 def start_ride(request):
 	if request.is_ajax() and request.method == "POST":
 		group = RideGroup.objects.get(pk=request.POST['group_id'])
