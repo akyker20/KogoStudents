@@ -11,3 +11,12 @@ class DriverProfile(models.Model):
 
 	def get_fullname(self):
 		return "%s %s" % (self.user.first_name, self.user.last_name)
+
+	def start_ride(self, group):
+		group.status = 'r'
+		group.driver = self
+		group.save()
+
+	def end_ride(self, group):
+		group.status = 'c'
+		group.save()

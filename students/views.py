@@ -44,9 +44,7 @@ def request_ride(request):
 	if request.method == "POST":
 		pickup = Location.objects.get(name=request.POST["pickup"])
 		dropoff = Location.objects.get(name=request.POST["dropoff"])
-		new_request = Request(student=request.user.studentprofile, pickup_loc=pickup, dropoff_loc=dropoff)
-		new_request.save()
-		RideGroup.build_group(new_request)
+		student.make_request(pickup, dropoff)
 		return redirect('wait_screen')
 	return redirect('pickup_locations')
 
@@ -69,8 +67,7 @@ def create_account(request):
 			user = authenticate(username=username,
                                 password=password)
 			login(request, user)
-			new_student = StudentProfile(user=user)
-			new_student.save()
+			new_student = StudentProfile.objects.create(user=user)
 			return redirect('pickup_locations')
 		else:
 			return render(request,'create_account.html', {'create_account_form': form})

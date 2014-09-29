@@ -37,6 +37,9 @@ class StudentProfile(models.Model):
 
 	#Returns the student's group number
 	def get_group_number(self):
+		current_group = self.get_group()
+		if current_group is None:
+			return
 		return RideGroup.get_group_number(self.get_group())
 
 	#Removes the student's most recent request and the group
@@ -44,6 +47,11 @@ class StudentProfile(models.Model):
 	def remove_recent_request(self):	
 		last_request = self.request_set.last()
 		last_request.cancel_and_possibly_remove_group()
+
+	def make_request(self, pickup, dropoff):
+		new_request = self.request_set.create(pickup_loc=pickup, 
+											  dropoff_loc=dropoff)
+		RideGroup.build_group(new_request)
 
 
 
@@ -76,7 +84,7 @@ class RideGroup(models.Model):
 	STATUS_CHOICES = (('w', 'Waiting'), ('r', 'Riding'), ('c', 'Completed'))
 	status = models.CharField(max_length=8, default='w', choices=STATUS_CHOICES)
 	driver = models.ForeignKey(DriverProfile, null=True, blank=True)
-	created_at = models.DateTimeField(auto_now=True)
+	created_at = models.DateTimeField(auto_now_add=True)
 	pickup_loc = models.ForeignKey(Location, related_name='pickup_groups')
 	dropoff_loc = models.ForeignKey(Location, related_name='dropoff_groups')
 
@@ -101,20 +109,16 @@ class RideGroup(models.Model):
 		new_group.save()
 		new_group.request_set.add(request)
 
+	#Returns the group number of a waiting group. The groups
+	#that are oldest have the smallest group numbers. Groups
+	#that are riding or completed do not have group numbers.
 	@staticmethod
 	def get_group_number(group):
-		competing_groups = RideGroup.objects.filter(pickup_loc=group.pickup_loc).all()
+		competing_groups = RideGroup.objects.filter(pickup_loc=group.pickup_loc, 
+								 					status='w').all()
 		for index, item in enumerate(competing_groups):
 			if item == group:
 				return (index+1)
-
-	def start_ride(self):
-		self.status = 'r'
-		self.save()
-
-	def end_ride(self):
-		self.status = 'c'
-		self.save()
 
 	def canTakeRequest(self, request):
 		return (self.pickup_loc == request.pickup_loc and 
@@ -132,7 +136,7 @@ class Request(models.Model):
 	pickup_loc = models.ForeignKey(Location, related_name='starting_location')
 	dropoff_loc = models.ForeignKey(Location, related_name='ending_location')
 	group = models.ForeignKey(RideGroup, null=True, blank=True)
-	time = models.DateTimeField(auto_now=True)
+	time = models.DateTimeField(auto_now_add=True)
 
 	def __unicode__(self):
 		return "Request by {}".format(self.student)

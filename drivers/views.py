@@ -57,7 +57,7 @@ def select_group(request):
 def start_ride(request):
 	if request.is_ajax() and request.method == "POST":
 		group = RideGroup.objects.get(pk=request.POST['group_id'])
-		group.start_ride()
+		driver.start_ride(group)
 		return HttpResponse("Success")
 
 @login_required
