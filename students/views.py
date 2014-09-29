@@ -88,3 +88,10 @@ def wait_screen(request):
 				   "group_number": group_number}
 		return render(request, 'students/wait_screen.html', context)
 	return redirect('pickup_locations')
+
+@login_required
+@require_student
+def get_group_number(request):
+	if request.is_ajax():
+		student = request.user.studentprofile
+		return HttpResponse(student.get_group_number())

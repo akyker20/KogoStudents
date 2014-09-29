@@ -35,6 +35,10 @@ class StudentProfile(models.Model):
 	def get_group(self):
 		return self.groups.last()
 
+	#Returns the student's group number
+	def get_group_number(self):
+		return RideGroup.get_group_number(self.get_group())
+
 	#Removes the student's most recent request and the group
 	#if the group only had that one request.
 	def remove_recent_request(self):	
