@@ -71,7 +71,7 @@ def create_account(request):
 			login(request, user)
 			new_student = StudentProfile(user=user)
 			new_student.save()
-			return redirect('ride_request')
+			return redirect('pickup_locations')
 		else:
 			return render(request,'create_account.html', {'create_account_form': form})
 	context =  {'create_account_form': NewStudentForm()}
