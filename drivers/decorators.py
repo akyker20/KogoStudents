@@ -5,7 +5,8 @@ def require_driver(function):
     try:
       request.user.driverprofile
       return function(request, *args, **kwargs)
-    except:
+    except Exception as e:
+      print e
       return redirect('driver_login')
 
   wrap.__doc__=function.__doc__
