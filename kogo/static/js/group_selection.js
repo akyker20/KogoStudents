@@ -1,7 +1,8 @@
 $(document).ready(function(){
+	$("button.navbar-toggle").addClass("collapsed");
 	setInterval(function () {
 		getGroups($("div.driver-select-group").data("pickup"));
-	}, 10000);
+	}, 6000);
 
 	$("ul.nav li a.location").click(function(){
 		getGroups($(this).data("loc"));

@@ -56,6 +56,7 @@ def select_group(request):
 @require_driver
 def start_ride(request):
 	if request.is_ajax() and request.method == "POST":
+		driver = request.user.driverprofile
 		group = RideGroup.objects.get(pk=request.POST['group_id'])
 		driver.start_ride(group)
 		return HttpResponse("Success")
@@ -64,6 +65,7 @@ def start_ride(request):
 @require_driver
 def end_ride(request):
 	if request.method == "POST":
+		driver = request.user.driverprofile
 		group = RideGroup.objects.get(pk=request.POST['groupID'])
-		group.end_ride()
+		driver.end_ride(group)
 		return redirect('group_selection_screen')

@@ -114,6 +114,8 @@ class RideGroup(models.Model):
 	#that are riding or completed do not have group numbers.
 	@staticmethod
 	def get_group_number(group):
+		if group.status == 'r':
+			return 'Riding'
 		competing_groups = RideGroup.objects.filter(pickup_loc=group.pickup_loc, 
 								 					status='w').all()
 		for index, item in enumerate(competing_groups):
