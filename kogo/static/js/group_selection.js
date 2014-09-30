@@ -15,7 +15,9 @@ var getGroups = function(location){
 			data: {"location": location}
 	}).success(function(html){
 		var previousLocationGroups = $("div.content-holder div.driver-select-group");
-		$("button.navbar-toggle").click();
+		if (!$("button.navbar-toggle").hasClass("collapsed")){
+			$("button.navbar-toggle").click();
+		}
 		previousLocationGroups.fadeOut(function(){
 			previousLocationGroups.remove();
 			$("div.content-holder").append(html);
