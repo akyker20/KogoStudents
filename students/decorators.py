@@ -11,3 +11,14 @@ def require_student(function):
   wrap.__doc__=function.__doc__
   wrap.__name__=function.__name__
   return wrap
+
+def handle_riding_and_waiting_students(function):
+  def wrap(request, *args, **kwargs):
+    student = request.user.studentprofile
+    if student.is_waiting_in_group() or student.is_riding():
+    	return redirect("wait_screen")
+    return function(request, *args, **kwargs)
+
+  wrap.__doc__=function.__doc__
+  wrap.__name__=function.__name__
+  return wrap

@@ -1,62 +1,20 @@
-from django.shortcuts import render, redirect
-from kogo.forms import AuthenticateForm, NewStudentForm
+#The purpose of this views file is to define all of the student views.
+
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
-from students.models import Location, Request, RideGroup, StudentProfile
+
+from decorators import require_student, handle_riding_and_waiting_students
+from kogo.forms import AuthenticateForm, NewStudentForm
 from kogo.helper import is_student
-from decorators import require_student
-
-def student_login(request, auth_form=None):
-  	if request.method == 'POST':
-		form = AuthenticateForm(data=request.POST)
-		if form.is_valid() and is_student(form.get_user()):
-			login(request, form.get_user())
-			return redirect('pickup_locations')
-		else:
-	  		messages.error(request, "Invalid Student Username/Password")
-  	return render(request,'students/student_login.html', {'auth_form': AuthenticateForm()})
-
-@login_required
-@require_student
-def pickup_locations(request):
-	student = request.user.studentprofile
-	if student.is_waiting_in_group():
-		return redirect('wait_screen')
-	return render(request, 'students/pickup_locations.html', {'starting_locations': Location.get_starting_locations()})
-
-@login_required
-@require_student
-def dropoff_locations(request):
-	pickup_loc = request.GET['pickup']
-	possible_dropoff_locs = Location.get_possible_dropoff_locations(pickup_loc)
-	context = {"dropoff_locs": possible_dropoff_locs, "pickup_loc": pickup_loc}
-	return render(request, 'students/dropoff_locations.html', context)
-
-@login_required
-@require_student
-def request_ride(request):
-	student = request.user.studentprofile
-	if student.is_waiting_in_group():
-		student.remove_recent_request()
-	if request.method == "POST":
-		pickup = Location.objects.get(name=request.POST["pickup"])
-		dropoff = Location.objects.get(name=request.POST["dropoff"])
-		student.make_request(pickup, dropoff)
-		return redirect('wait_screen')
-	return redirect('pickup_locations')
+from students.models import Location, Request, RideGroup, StudentProfile
 
 
-@login_required
-@require_student
-def cancel_request(request):
-	if request.method == "POST":
-		student = request.user.studentprofile
-		student.remove_recent_request()
-	return redirect('pickup_locations')
-
+#Allows the student to create an account. If the data is valid, the student
+#is directed to the pickup locations screen.
 def create_account(request):
 	if request.method == "POST":
 		form = NewStudentForm(data=request.POST)
@@ -69,11 +27,81 @@ def create_account(request):
 			login(request, user)
 			new_student = StudentProfile.objects.create(user=user)
 			return redirect('pickup_locations')
-		else:
-			return render(request,'create_account.html', {'create_account_form': form})
+		return render(request,'create_account.html', {'create_account_form': form})
 	context =  {'create_account_form': NewStudentForm()}
 	return render(request,'create_account.html', context)
 
+
+#A view to handle student login. The view checks that the input
+#information is valid and that the user is a student.
+def student_login(request, auth_form=None):
+  	if request.method == 'POST':
+		form = AuthenticateForm(data=request.POST)
+		if form.is_valid() and is_student(form.get_user()):
+			login(request, form.get_user())
+			return redirect('pickup_locations')
+		else:
+	  		messages.error(request, "Invalid Student Username/Password")
+  	return render(request,'students/student_login.html', {'auth_form': AuthenticateForm()})
+
+
+#If the user is logged in, the user is a student, and that student is
+#not currently riding or waiting, then a list of possible pickup locations
+#is displayed.
+@login_required
+@require_student
+@handle_riding_and_waiting_students
+def pickup_locations(request):
+	context = {'starting_locations': Location.get_starting_locations()}
+	return render(request, 'students/pickup_locations.html', context)
+
+
+#If the user is logged in, the user is a student, and that student is
+#not currently riding or waiting, then a list of possible dropoff locations
+#is displayed to the student excluding the pickup location.
+@login_required
+@require_student
+@handle_riding_and_waiting_students
+def dropoff_locations(request):
+	pickup_loc = request.GET['pickup']
+	possible_dropoff_locs = Location.get_possible_dropoff_locations(pickup_loc)
+	context = {"dropoff_locs": possible_dropoff_locs, "pickup_loc": pickup_loc}
+	return render(request, 'students/dropoff_locations.html', context)
+
+
+#If the user is logged in, the user is a student, and that student is
+#not currently riding or waiting, then a request is created with the
+#from the pickup location to the dropoff location.
+@login_required
+@require_student
+@handle_riding_and_waiting_students
+def request_ride(request):
+	if request.method == "POST":
+		student = request.user.studentprofile
+		pickup = Location.objects.get(name=request.POST["pickup"])
+		dropoff = Location.objects.get(name=request.POST["dropoff"])
+		student.make_request(pickup, dropoff)
+		return redirect('wait_screen')
+	return redirect('pickup_locations')
+
+
+#If the user is logged in, and the user is a student, and the student
+#is currently waiting in a group (not riding), then the student is
+#able to cancel their ride request.
+@login_required
+@require_student
+def cancel_request(request):
+	if request.method == "POST":
+		student = request.user.studentprofile
+		if student.is_waiting_in_group():
+			student.remove_recent_request()
+	return redirect('pickup_locations')
+
+
+#If the user is logged in, and the user is a student, the wait screen
+#will present the user with their group number - the number of groups
+#ahead of the user's group for the pickup location where the user
+#is waiting.
 @login_required
 @require_student
 def wait_screen(request):
@@ -81,11 +109,15 @@ def wait_screen(request):
 	if student.is_waiting_in_group():
 		group = student.get_group()
 		group_number = RideGroup.get_group_number(group)
-		context = {"start_loc": group.pickup_loc.name, "end_loc": group.dropoff_loc.name, 
+		context = {"start_loc": group.pickup_loc.name, 
+				   "end_loc": group.dropoff_loc.name, 
 				   "group_number": group_number}
 		return render(request, 'students/wait_screen.html', context)
 	return redirect('pickup_locations')
 
+
+#An ajax call made from the waiting screen to update the group number 
+#displayed. The group number returned is a String.
 @login_required
 @require_student
 def get_group_number(request):
