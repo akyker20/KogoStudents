@@ -3,7 +3,7 @@
   <h3 class="dropoff-title">From <strong class="dropoff-loc"> {{ location.name }}</strong> to:</h3>
    {% for group in groups %}
     <div class="btn-holder">
-      <form type="get" action="{% url 'select_group' %}">
+      <form type="get" action="{% url 'start_ride_screen' %}">
         <input type="hidden" name="groupID" value="{{group.id}}">
         <button class="location-btn dropoff shadow btn btn-lg">
           {{group.dropoff_loc}}

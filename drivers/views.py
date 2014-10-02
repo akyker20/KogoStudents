@@ -1,14 +1,20 @@
-from django.shortcuts import render, redirect
+#The purpose of this views file is to define all of the student views.
+
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from students.models import Location, RideGroup
 from django.contrib import messages
-from kogo.forms import AuthenticateForm
-from django.template.loader import render_to_string
 from django.http import HttpResponse
-from kogo.helper import is_driver
-from decorators import require_driver
+from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 
+from decorators import require_driver
+from kogo.forms import AuthenticateForm
+from kogo.helper import is_driver
+from students.models import Location, RideGroup
+
+
+#A view to handle driver login. The view checks that the input
+#information is valid and that the user is a driver.
 def driver_login(request, auth_form=None):
   	if request.method == 'POST':
 		form = AuthenticateForm(data=request.POST)
@@ -19,53 +25,56 @@ def driver_login(request, auth_form=None):
 	  		messages.error(request, "Invalid Driver Username/Password")
   	return render(request,'drivers/driver_login.html', {'auth_form': AuthenticateForm()})
 
+
+#Handles an ajax GET request to obtain the groups waiting at a certain
+#location specified in the request header. Returns html representing
+#these groups.
 @login_required
 @require_driver
 def get_location_groups(request):
 	if request.is_ajax():
 		location = Location.objects.get(name=request.GET['location'])
 		groups = location.pickup_groups.filter(status='w').all()
-		context = {'location': location, 
-			   	   'groups': groups}
+		context = {'location': location, 'groups': groups}
 		html = render_to_string('drivers/location_groups.html', context)
 		return HttpResponse(html)
 
 
+#This screen shows the groups that are waiting at the driver's base location.
+#At this point the base location is just set to West Bus Stop.
 @login_required
 @require_driver
 def group_selection_screen(request):
-	starting_locations = Location.get_starting_locations()
-	location_name = request.GET.get('location')
-	if location_name is None:
-		location = starting_locations[0]
-	else:
-		location = Location.objects.get(name=location_name)
-	context = {'location': location, 
-			   'starting_locations': starting_locations}
+	pickup_locs = Location.get_starting_locations()
+	location = pickup_locs[0]
+	context = {'location': location, 'pickup_locs': pickup_locs}
 	return render(request, 'drivers/group_selection.html', context)
 
-@login_required
-@require_driver
-def select_group(request):
-	group = RideGroup.objects.get(pk=int(request.GET['groupID']))
-	requests = group.request_set.all()
-	context = {'group': group, 'requests': requests}
-	return render(request, 'drivers/ride_screen.html', context)
 
+#After the user has selected a group from the group selection screen,
+#the user is presented with the members of this group. In order to
+#start the ride the user will have to check that each member is present.
 @login_required
 @require_driver
-def start_ride(request):
-	if request.is_ajax() and request.method == "POST":
-		driver = request.user.driverprofile
-		group = RideGroup.objects.get(pk=request.POST['group_id'])
-		driver.start_ride(group)
-		return HttpResponse("Success")
-
-@login_required
-@require_driver
-def end_ride(request):
+def start_ride_screen(request):
 	if request.method == "POST":
 		driver = request.user.driverprofile
 		group = RideGroup.objects.get(pk=request.POST['groupID'])
+		driver.start_ride(group)
+		return redirect('ride_in_progress')
+	group = RideGroup.objects.get(pk=int(request.GET['groupID']))
+	requests = group.request_set.all()
+	context = {'group': group, 'requests': requests}
+	return render(request, 'drivers/start_ride_screen.html', context)
+
+@login_required
+@require_driver
+def ride_in_progress(request):
+	driver = request.user.driverprofile
+	if request.method == "POST":
+		group = RideGroup.objects.get(pk=request.POST['groupID'])
 		driver.end_ride(group)
 		return redirect('group_selection_screen')
+	group = driver.ridegroup_set.get(status='r')
+	context = {'group': group}
+	return render(request, 'drivers/ride_in_progress.html', context)

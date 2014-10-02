@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}	
+<div class="wait-background group-info">
+		<div class="request-summary-holder push-down">
+			<span class="glyphicon glyphicon-road"></span>
+			From <strong>{{group.pickup_loc.name}}</strong> to <strong>{{group.dropoff_loc.name}}</strong>
+		</div>
+	<div class="during-ride-container">
+			<h2 class="ride-in-progress">Ride in Progress</h2>
+			<form method="post" action="{% url 'ride_in_progress' %}">
+				{% csrf_token %}
+				<input type="hidden" name="groupID" value="{{group.id}}">
+				<button type="submit" class="shadow end-ride btn btn-lg">
+					Ride Completed
+				</button>
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

@@ -18,17 +18,6 @@ $(document).ready(function(){
 			$(this).find("span.glyphicon-ok").addClass("hidden");
 		}
 	});
-	$("div.content-holder").on("click", "button.start-ride", function(){
-		$.ajax({
-			type: "POST",
-			url: "start_ride",
-			data: {"group_id": $(this).data("group-id")}
-		}).success(function(){
-			$("div.start-ride-holder").fadeOut(function(){
-				$("div.during-ride-container").fadeIn();
-			});
-		});
-	});
 });
 
 var showStartRideScreen = function(id){

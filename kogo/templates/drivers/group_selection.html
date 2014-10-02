@@ -2,7 +2,7 @@
 
   {% block navbar_content %}
   <ul class="nav navbar-nav">
-  	{% for loc in starting_locations %}
+  	{% for loc in pickup_locs %}
   	<li><a class="location" data-loc="{{loc.name}}">{{loc.name}}</a></li>
   	{% endfor %}
     <li><a href="{% url 'logout_user'%}">Logout</a></li>
