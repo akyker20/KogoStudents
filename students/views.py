@@ -106,7 +106,7 @@ def cancel_request(request):
 @require_student
 def wait_screen(request):
 	student = request.user.studentprofile
-	if student.is_waiting_in_group():
+	if student.is_waiting_in_group() or student.is_riding():
 		group = student.get_group()
 		group_number = RideGroup.get_group_number(group)
 		context = {"start_loc": group.pickup_loc.name, 

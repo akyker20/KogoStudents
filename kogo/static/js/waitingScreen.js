@@ -1,4 +1,7 @@
 $(document).ready(function(){
+	if($("h1.group-number").text()==='Riding'){
+		removeCancelButton();
+	}
 	setInterval(function () {
 		getNewGroupNumber();
 	}, 6000);
@@ -14,7 +17,14 @@ var getNewGroupNumber = function(){
 		}
 		// Position could be a number of 'Riding'
 		else {
+			if(position==='Riding'){
+				removeCancelButton();
+			}
 			$("h1.group-number").text(position);
 		}
 	});
 };
+
+var removeCancelButton = function(){
+	$("button.cancel-request-holder").remove();
+}
