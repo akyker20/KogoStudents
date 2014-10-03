@@ -1,8 +1,14 @@
 $(document).ready(function(){
 	$("button.navbar-toggle").addClass("collapsed");
-	setInterval(function () {
-		getGroups($("div.driver-select-group").data("pickup"));
-	}, 6000);
+	startPollingForGroups();	
+	$("button.navbar-toggle").click(function(){
+		if($(this).hasClass("collapsed")){
+			stopPollingForGroups();		
+		}
+		else {
+			startPollingForGroups();	
+		}
+	});
 
 	$("ul.nav li a.location").click(function(){
 		getGroups($(this).data("loc"));
@@ -16,7 +22,7 @@ var getGroups = function(location){
 			data: {"location": location}
 	}).success(function(html){
 		var previousLocationGroups = $("div.content-holder div.driver-select-group");
-		if (!$("button.navbar-toggle").hasClass("collapsed")){
+		if(!$("button.navbar-toggle").hasClass("collapsed")){
 			$("button.navbar-toggle").click();
 		}
 		previousLocationGroups.fadeOut(function(){
@@ -25,3 +31,16 @@ var getGroups = function(location){
 		});
 	});
 };
+
+var myInterval = null;
+
+var startPollingForGroups = function() {
+	stopPollingForGroups();
+	myInterval = setInterval(function () {
+			getGroups($("div.driver-select-group").data("pickup"));
+	}, 6000);
+}
+
+var stopPollingForGroups = function() {
+	clearInterval(myInterval);
+}
