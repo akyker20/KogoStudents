@@ -50,10 +50,6 @@ h3.pickup-title {
 	font-weight: bold;
 }
 
-h3.dropoff-title {
-	margin-top: 35px;
-}
-
 button.back-btn {
 	margin-top: 20px;
 	margin-left: calc(50% - 150px);
@@ -83,9 +79,9 @@ div.wait-background {
 }
 
 div.wait-background h1{
-	padding: 50px;
+	padding: 40px;
 	color: white;
-	font-size: 100px;
+	font-size: 80px;
 	margin-top: 0px;
 }
 
@@ -190,4 +186,8 @@ button.num-requests {
 	top: 30px;
 	padding: 0px 20px;
 	font-size: 24px;
+}
+
+div.btn-holder:last-child {
+	margin-bottom: 20px;
 }
