@@ -1,5 +1,7 @@
+const RIDING = 'Riding';
+
 $(document).ready(function(){
-	if($("h1.group-number").text()==='Riding'){
+	if($("h1.group-number").text()===RIDING){
 		removeCancelButton();
 	}
 	setInterval(function () {
@@ -17,7 +19,7 @@ var getNewGroupNumber = function(){
 		}
 		// Position could be a number of 'Riding'
 		else {
-			if(position==='Riding'){
+			if(position===RIDING){
 				removeCancelButton();
 			}
 			$("h1.group-number").text(position);
