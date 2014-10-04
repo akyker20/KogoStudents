@@ -4,6 +4,12 @@
 <script type="text/javascript" src="{{STATIC_URL}}js/driver.js"></script>
 {% endblock %}
 
+{% block navbar_content %}
+  <ul class="nav navbar-nav">
+    <li><a href="{% url 'logout_user'%}">Logout</a></li>
+  </ul>
+{% endblock %}
+
 {% block content %}
 <div class="content-holder">
 	<div class="wait-background group-info">
