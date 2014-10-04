@@ -25,10 +25,13 @@ var getGroups = function(location){
 		if(!$("button.navbar-toggle").hasClass("collapsed")){
 			$("button.navbar-toggle").click();
 		}
-		previousLocationGroups.fadeOut(function(){
-			previousLocationGroups.remove();
-			$("div.content-holder").append(html);
-		});
+		//If html is different from the current html
+		if(previousLocationGroups.text() != $([$.parseHTML(html)[0]]).text()){
+			previousLocationGroups.fadeOut(function(){
+				previousLocationGroups.remove();
+				$("div.content-holder").append(html);
+			});
+		}
 	});
 };
 

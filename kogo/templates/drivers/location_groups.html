@@ -13,7 +13,8 @@
     {% endfor %}
     {% else %}
     <p class="no-requests">
-      There are currently no requests from {{location.name}}. You have the freedom to go to another location. Please remember that just because there are no requests does not mean there are not students looking for a ride!
+      <img width="20px" src="../static/images/loader.gif">
+      Searching for <strong>{{location.name}}</strong> requests.
     </p>
     {% endif %}
   </div>
