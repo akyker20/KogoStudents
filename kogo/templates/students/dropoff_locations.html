@@ -16,7 +16,7 @@
         {% csrf_token %}
         <input type="hidden" name="pickup" value="{{pickup_loc}}">
         <input type="hidden" name="dropoff" value="{{loc.name}}">
-        <button class="location-btn dropoff shadow btn btn-lg">
+        <button class="location-btn dropoff shadow btn btn-default btn-lg">
           {{loc.name}}
         </button>
       </form>
