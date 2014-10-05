@@ -13,19 +13,21 @@
 {% block content %}
 <div class="content-holder">
 	<div class="wait-background group-info">
-		<div class="request-summary-holder push-down">
+		<div class="request-summary-holder">
 			<span class="glyphicon glyphicon-road"></span>
 			From <strong>{{group.pickup_loc.name}}</strong> to <strong>{{group.dropoff_loc.name}}</strong>
 		</div>
 		<div class="start-ride-holder">
-			{% for request in requests %}
-			<div class="btn-holder">
-			    <button class="student shadow btn btn-default btn-lg" data-name="{{loc.name}}">
-			      {{request.student}}
-			      <span class="glyphicon glyphicon-ok hidden"></span>
-			    </button>
-		  	</div>
-			{% endfor %}
+			<div class="ride-names-holder">
+				{% for request in requests %}
+				<div class="btn-holder">
+				    <button class="student shadow btn btn-default btn-lg" data-name="{{loc.name}}">
+				      {{request.student}}
+				      <span class="glyphicon glyphicon-ok hidden"></span>
+				    </button>
+			  	</div>
+				{% endfor %}
+			</div>
 			<form method="post" action="{% url 'start_ride_screen' %}">
 				{% csrf_token %}
 				<input type="hidden" name="groupID" value="{{group.id}}">
