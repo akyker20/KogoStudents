@@ -17,7 +17,7 @@
           <button class="btn btn-danger num-requests request-shadow">{{loc|num_active_requests}}</button>
           <form method="get" action="{% url 'dropoff_locations' %}">
             <input type="hidden" name="pickup" value="{{loc.name}}">
-        		<button type="submit" class="shadow location-btn pickup btn btn-lg">
+        		<button type="submit" class="shadow location-btn pickup btn btn-default btn-lg">
         			{{loc.name}}
         		</button>
           </form>

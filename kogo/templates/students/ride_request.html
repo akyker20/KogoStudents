@@ -19,7 +19,8 @@
     	{% for loc in starting_locations %}
     	<div class="btn-holder">
         <button class="btn btn-danger num-requests request-shadow">{{loc|num_active_requests}}</button>
-    		<button class="shadow location-btn pickup btn btn-lg" data-name="{{loc.name}}">
+    		<button class="shadow location-btn pickup btn btn-default btn-lg" 
+                data-name="{{loc.name}}">
     			{{loc.name}}
     		</button>
     	</div>

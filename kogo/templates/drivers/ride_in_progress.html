@@ -7,7 +7,7 @@
 			From <strong>{{group.pickup_loc.name}}</strong> to <strong>{{group.dropoff_loc.name}}</strong>
 		</div>
 	<div class="during-ride-container">
-			<h2 class="ride-in-progress">Ride in Progress</h2>
+			<h1 class="ride-in-progress">Riding</h1>
 			<form method="post" action="{% url 'ride_in_progress' %}">
 				{% csrf_token %}
 				<input type="hidden" name="groupID" value="{{group.id}}">
