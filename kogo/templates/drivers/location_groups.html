@@ -5,7 +5,7 @@
     <div class="btn-holder">
       <form type="get" action="{% url 'start_ride_screen' %}">
         <input type="hidden" name="groupID" value="{{group.id}}">
-        <button class="location-btn dropoff shadow btn btn-lg">
+        <button class="location-btn dropoff shadow btn btn-default btn-lg">
           {{group.dropoff_loc}}
         </button>
       </form> 

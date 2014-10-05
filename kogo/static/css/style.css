@@ -188,6 +188,10 @@ button.num-requests {
 	font-size: 24px;
 }
 
+span.glyphicon-remove {
+	color: red;
+}
+
 div.btn-holder:last-child {
 	padding-bottom: 25px;
 }

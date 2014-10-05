@@ -11,7 +11,7 @@
 			<form method="post" action="{% url 'ride_in_progress' %}">
 				{% csrf_token %}
 				<input type="hidden" name="groupID" value="{{group.id}}">
-				<button type="submit" class="shadow end-ride btn btn-lg">
+				<button type="submit" class="shadow end-ride btn btn-default btn-lg">
 					Ride Completed
 				</button>
 			</form>

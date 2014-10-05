@@ -29,7 +29,7 @@
 			<form method="post" action="{% url 'start_ride_screen' %}">
 				{% csrf_token %}
 				<input type="hidden" name="groupID" value="{{group.id}}">
-				<button type="submit" style="display: none" class="shadow start-ride btn btn-lg" data-group-id="{{group.id}}">Start Ride
+				<button type="submit" style="display: none" class="shadow start-ride btn btn-default btn-lg" data-group-id="{{group.id}}">Start Ride
 				</button>
 			</form>
 		</div>
