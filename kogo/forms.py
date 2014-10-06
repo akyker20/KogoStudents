@@ -4,16 +4,25 @@ from django import forms
 from django.contrib.auth import authenticate
 
 class NewStudentForm(UserCreationForm):
-    email = forms.EmailField(required=True)
 
+    #Make this a regex field eventually
+    username = forms.CharField(label="Duke netid", max_length=8)
+    
     class Meta:
         model = User
-        fields = ( "username", "email" )
+        fields = ( "username", "first_name", "last_name" )
+
+    def save(self, commit=True):
+        user = super(NewStudentForm, self).save(commit=False)
+        user.email = "{}@duke.edu".format(self.cleaned_data["username"])
+        if commit:
+            user.save()
+        return user
 
 
 
 class AuthenticateForm(AuthenticationForm):
-    username = forms.CharField(widget=forms.widgets.TextInput(attrs={'placeholder': 'Username'}))
+    username = forms.CharField(widget=forms.widgets.TextInput(attrs={'placeholder': 'Duke netid'}))
     password = forms.CharField(widget=forms.widgets.PasswordInput(attrs={'placeholder': 'Password'}))
 
     def is_valid(self):
