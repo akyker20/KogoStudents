@@ -73,7 +73,7 @@ div.cancel-request-holder strong {
 }
 
 div.content-holder {
-	height: calc(100% - 50px);
+	height: calc(100% - 52px);
 }
 
 div.wait-background {
@@ -81,6 +81,7 @@ div.wait-background {
 	margin-top: 0px;
 	height: 100%;
 	text-align: center;
+	overflow: auto;
 }
 
 div.wait-background h1 {
