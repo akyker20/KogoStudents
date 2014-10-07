@@ -46,6 +46,10 @@ button.location-btn.pickup {
 	padding: 40px;
 }
 
+div.start-ride-holder {
+	padding-bottom: 20px;
+}
+
 h3.pickup-title, h3.dropoff-title {
 	margin-left: calc(50% - 150px);
 }
