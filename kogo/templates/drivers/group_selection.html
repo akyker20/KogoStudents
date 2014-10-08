@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 
-  {% block navbar_content %}
-  <ul class="nav navbar-nav">
-  	{% for loc in pickup_locs %}
-  	<li><a class="location" data-loc="{{loc.name}}">{{loc.name}}</a></li>
-  	{% endfor %}
-    <li><a href="{% url 'logout_user'%}">Logout</a></li>
-  </ul>
+{% block navbar_content %}
+<ul class="nav navbar-nav">
+	{% for loc in pickup_locs %}
+		<li><a class="location" data-loc="{{loc.name}}">{{loc.name}}</a></li>
+	{% endfor %}
+	<li><a href="{% url 'logout_user'%}">Logout</a></li>
+</ul>
 {% endblock %}
 
 {% block additional_javascript %}
-<script type="text/javascript" src="{{STATIC_URL}}js/group_selection.js"></script>
+<script type="text/javascript" 
+		src="{{STATIC_URL}}js/group_selection.js"></script>
 {% endblock %}
 
 {% block content %}

@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
-  {% block navbar_content %}
-    <ul class="nav navbar-nav">
-      <li><a href="{% url 'logout_user'%}">Logout</a></li>
-    </ul>
-  {% endblock %}
+{% block navbar_content %}
+  <ul class="nav navbar-nav">
+    <li><a href="{% url 'logout_user'%}">Logout</a></li>
+  </ul>
+{% endblock %}
   
 {% block content %}
 
-  <h3 class="dropoff-title">From <strong class="dropoff-loc"> {{ pickup_loc }}</strong> to:</h3>
+  <h3 class="dropoff-title">
+    From <strong class="dropoff-loc"> {{ pickup_loc }}</strong> to:
+  </h3>
   <div class="dropoff-buttons-container">
     {% for loc in dropoff_locs %}
     <div class="btn-holder">

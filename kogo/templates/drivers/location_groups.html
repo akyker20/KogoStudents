@@ -1,7 +1,9 @@
 <div class="driver-select-group" data-pickup="{{location.name}}">
-    {% if groups %}
-  <h3 class="dropoff-title">From <strong class="dropoff-loc"> {{ location.name }}</strong> to:</h3>
-   {% for group in groups %}
+  {% if groups %}
+    <h3 class="dropoff-title">
+      From <strong class="dropoff-loc"> {{ location.name }}</strong> to:
+    </h3>
+    {% for group in groups %}
     <div class="btn-holder">
       <form type="get" action="{% url 'start_ride_screen' %}">
         <input type="hidden" name="groupID" value="{{group.id}}">
@@ -9,12 +11,12 @@
           {{group.dropoff_loc}}
         </button>
       </form> 
-     </div>
+    </div>
     {% endfor %}
-    {% else %}
+  {% else %}
     <p class="no-requests">
       <img width="20px" src="../static/images/loader.gif">
       Searching for <strong>{{location.name}}</strong> requests.
     </p>
-    {% endif %}
-  </div>
+  {% endif %}
+</div>
