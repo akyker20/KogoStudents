@@ -74,6 +74,8 @@ div.start-ride-holder {
 
 h3.pickup-title, h3.dropoff-title {
 	margin-left: calc(50% - 150px);
+	margin-top: 0px;
+	padding-top: 20px;
 }
 
 h3.pickup-title {
@@ -136,7 +138,7 @@ div.request-summary-holder {
 }
 
 p.no-requests{
-	margin: 30px;
+	padding: 30px;
 	font-size: 22px;
 }
 
