@@ -40,7 +40,7 @@ class StudentProfile(models.Model):
 		current_group = self.get_group()
 		if current_group is None:
 			return
-		return RideGroup.get_group_number(self.get_group())
+		return RideGroup.get_group_number(current_group)
 
 	#Removes the student's most recent request and the group
 	#if the group only had that one request.
@@ -99,11 +99,12 @@ class RideGroup(models.Model):
 
 	@staticmethod
 	def build_group(request):
-		groups = RideGroup.objects.filter(dropoff_loc=request.dropoff_loc, status='w')
-		for group in groups:
-			if (group.request_set.count() < 4) and group.canTakeRequest(request):
-				group.request_set.add(request)
-				return
+		if request.dropoff_loc.name != "Other":
+			groups = RideGroup.objects.filter(dropoff_loc=request.dropoff_loc, status='w')
+			for group in groups:
+				if (group.request_set.count() < 4) and group.canTakeRequest(request):
+					group.request_set.add(request)
+					return
 		new_group = RideGroup(pickup_loc=request.pickup_loc, 
 							  dropoff_loc=request.dropoff_loc)
 		new_group.save()

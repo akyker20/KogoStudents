@@ -180,5 +180,5 @@ class DriverWithMultipleStudents(TestCase):
 			self.student2.get_group())
 
 	def test_get_group_number(self):
-		self.assertEqual(None, self.student1.get_group_number())
+		self.assertEqual("Riding", self.student1.get_group_number())
 		self.assertEqual(1, self.student2.get_group_number())
