@@ -12,6 +12,17 @@ from kogo.forms import AuthenticateForm
 from kogo.helper import is_student
 from students.models import Location, Request, RideGroup, StudentProfile
 
+from django.dispatch import receiver
+from registration.signals import user_activated
+
+
+@receiver(user_activated)
+def login_on_activation(sender, user, request, **kwargs):
+    """Logs in the user after activation"""
+    user.backend = 'django.contrib.auth.backends.ModelBackend'
+    login(request, user)
+
+
 #A view to handle student login. The view checks that the input
 #information is valid and that the user is a student.
 def student_login(request, auth_form=None):
