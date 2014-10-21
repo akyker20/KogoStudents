@@ -8,29 +8,9 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 
 from decorators import require_student, handle_riding_and_waiting_students
-from kogo.forms import AuthenticateForm, NewStudentForm
+from kogo.forms import AuthenticateForm
 from kogo.helper import is_student
 from students.models import Location, Request, RideGroup, StudentProfile
-
-
-#Allows the student to create an account. If the data is valid, the student
-#is directed to the pickup locations screen.
-def create_account(request):
-	if request.method == "POST":
-		form = NewStudentForm(data=request.POST)
-		if form.is_valid():
-			username = form.clean_username()
-			password = form.clean_password2()
-			form.save()
-			user = authenticate(username=username,
-                                password=password)
-			login(request, user)
-			new_student = StudentProfile.objects.create(user=user)
-			return redirect('pickup_locations')
-		return render(request,'create_account.html', {'create_account_form': form})
-	context =  {'create_account_form': NewStudentForm()}
-	return render(request,'create_account.html', context)
-
 
 #A view to handle student login. The view checks that the input
 #information is valid and that the user is a student.

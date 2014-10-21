@@ -2,7 +2,6 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',    
     url(r'^login$', 'students.views.student_login', name='student_login'),
-    url(r'^create_account$', 'students.views.create_account', name='create_account'),
     url(r'^pickup_locations$', 'students.views.pickup_locations', name='pickup_locations'),
     url(r'^dropoff_locations$', 'students.views.dropoff_locations', name='dropoff_locations'),
     url(r'^request_ride$', 'students.views.request_ride', name='request_ride'),

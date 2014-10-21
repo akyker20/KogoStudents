@@ -2,7 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from drivers.models import DriverProfile
+from registration.signals import user_registered
 import datetime
+
 
 #This class represents the student. The student will have requests
 #and will be part of groups.
@@ -54,7 +56,12 @@ class StudentProfile(models.Model):
 		RideGroup.build_group(new_request)
 
 
-
+#Callback when a user is registered.
+def user_registered_callback(sender, user, request, **kwargs):
+    profile = StudentProfile(user = user)
+    profile.save()
+ 
+user_registered.connect(user_registered_callback)
 
 
 

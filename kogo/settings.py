@@ -39,7 +39,10 @@ INSTALLED_APPS = (
     'kogo',
     'students',
     'drivers',
+    'registration',
 )
+
+ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -50,6 +53,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'kogoadvertising@gmail.com'
+EMAIL_HOST_PASSWORD = 'kogocrowell'
+EMAIL_PORT = 587
 
 ROOT_URLCONF = 'kogo.urls'
 
