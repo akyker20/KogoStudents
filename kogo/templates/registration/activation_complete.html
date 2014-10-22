@@ -2,6 +2,15 @@
 
 
 {% block content %}
-<div>Your account is now active.</div>
-<button href="{% url 'home' %}" class="shadow btn btn-lg">Start Riding</button>
+<div class="content-holder">
+	<div>
+		<h1>Welcome to Kogo</h1>
+		<p>Your account is now active.</p>
+	</div>
+	<img width="100px" src="{{STATIC_URL}}images/loader.gif">
+	<div>
+		<p>Loading your account...</p>
+	</div>
+</div>
+
 {% endblock %}

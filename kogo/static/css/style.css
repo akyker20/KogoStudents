@@ -60,12 +60,11 @@ button.location-btn, button.student {
 	margin: 22px auto;
 	font-size: 24px;
 	display: block;
-	padding: 12px;
+	padding: 35px;
 }
 
 button.location-btn.pickup {
 	margin: -8px auto;
-	padding: 40px;
 }
 
 div.start-ride-holder {
@@ -73,7 +72,6 @@ div.start-ride-holder {
 }
 
 h3.pickup-title, h3.dropoff-title {
-	margin-left: calc(50% - 150px);
 	margin-top: 0px;
 	padding-top: 20px;
 }
@@ -102,10 +100,11 @@ div.cancel-request-holder strong {
 
 div.content-holder {
 	height: calc(100% - 52px);
+	text-align: center;
 }
 
 div.wait-background {
-	background: rgb(27, 180, 27);
+	background: rgba(0, 173, 0, 0.57);
 	margin-top: 0px;
 	height: 100%;
 	text-align: center;
@@ -157,7 +156,7 @@ form.new-student h3 {
 
 button.num-requests {
 	position: relative;
-	left: calc(50% + 91px);
+	left: 119px;
 	top: 30px;
 	padding: 0px 20px;
 	font-size: 24px;

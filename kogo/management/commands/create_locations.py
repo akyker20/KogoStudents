@@ -10,9 +10,6 @@ class Command(BaseCommand):
 			location_names = ["West Bus Stop",
 							  "East Bus Stop",
 							  "Anderson St.",
-							  "Target",
-							  "Southpoint",
-							  "Whole Foods",
 							  "Other"]
 			for loc in location_names:
 				new_loc = Location(name=loc)
