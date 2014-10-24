@@ -8,6 +8,10 @@ body{
   	background-size: cover;
 }
 
+input#id_email, input#id_username {
+	text-transform: lowercase;
+}
+
 .btn, a, h3, h1 {
 	font-family: 'Titillium Web', sans-serif;
 }

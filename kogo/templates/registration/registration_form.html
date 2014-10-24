@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
+{% block navbar_content %}
+  <ul class="nav navbar-nav">
+    <li><a href="{% url 'student_login'%}">Back to Login</a></li>
+  </ul>
+{% endblock %}
+
 {% block content %}
 <form class="new-student" action="" method="post">
 	{% csrf_token %}
