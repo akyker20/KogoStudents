@@ -6,15 +6,8 @@ from registration.forms import RegistrationFormUniqueEmail
 from django.core.exceptions import ValidationError
 
 class AuthenticateForm(AuthenticationForm):
-    username = forms.CharField(widget=forms.widgets.TextInput(attrs={'placeholder': 'Duke netid'}))
+    username = forms.CharField(widget=forms.widgets.TextInput(attrs={'placeholder': 'netID@duke.edu'}))
     password = forms.CharField(widget=forms.widgets.PasswordInput(attrs={'placeholder': 'Password'}))
-
-    def is_valid(self):
-        form = super(AuthenticateForm, self).is_valid()
-        for f, error in self.errors.iteritems():
-            if f != '__all__':
-                self.fields[f].widget.attrs.update({'class': 'error', 'value': strip_tags(error)})
-        return form
 
 class StudentRegistrationForm(RegistrationFormUniqueEmail):
     email = forms.RegexField(label="Duke Email", max_length=16,

@@ -25,15 +25,14 @@ def login_on_activation(sender, user, request, **kwargs):
 
 #A view to handle student login. The view checks that the input
 #information is valid and that the user is a student.
-def student_login(request, auth_form=None):
+def student_login(request):
+	form = AuthenticateForm()
   	if request.method == 'POST':
 		form = AuthenticateForm(data=request.POST)
 		if form.is_valid() and is_student(form.get_user()):
 			login(request, form.get_user())
 			return redirect('pickup_locations')
-		else:
-	  		messages.error(request, "Invalid Student Username/Password")
-  	return render(request,'students/student_login.html', {'auth_form': AuthenticateForm()})
+  	return render(request,'students/student_login.html', {'auth_form': form})
 
 
 #If the user is logged in, the user is a student, and that student is
