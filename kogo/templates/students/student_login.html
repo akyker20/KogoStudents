@@ -10,7 +10,7 @@
 {% block content %} 
 <div class="login-form-container">
 	<h1>Student Login</h1>
-  <form action="{{url}}" method="post">
+  <form action="{{url}}" id="student-login" method="post">
     {% csrf_token %}
       {{auth_form.non_field_errors}}
       {% for field in auth_form %}
