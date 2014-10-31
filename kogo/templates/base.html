@@ -6,9 +6,12 @@
     <title>Kogo Adv</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet">
-    <link href="{{STATIC_URL}}css/style.css" rel="stylesheet">
-    <link href="{{STATIC_URL}}css/login.css" rel="stylesheet">
+    <!-- Imported Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/style.css">
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/login.css">
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/informational.css">
+    <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
   </head>
   <body>
@@ -37,7 +40,7 @@
 
     {% block content %}{% endblock %}
 
-    <!-- Javascript -->
+    <!-- Imported Javascript -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}js/bootstrap.min.js"></script>
     {% block additional_javascript %}{% endblock %}

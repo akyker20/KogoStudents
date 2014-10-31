@@ -27,6 +27,10 @@ def logout_user(request):
   return redirect('home')
 
 
+def companies(request):
+  return render(request, 'companies.html', {})
+
+
 from registration.backends.default.views import RegistrationView
 from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
