@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content-holder home">
+	<section class="home-container shadow">
+		<a class="btn btn-primary shadow" href="{% url 'student_login' %}">Students</a>
+		<a class="btn btn-primary shadow" href="{% url 'companies' %}">Business</a>
+	</section>
+</div>
+{% endblock %}

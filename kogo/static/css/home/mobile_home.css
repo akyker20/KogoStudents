@@ -1,0 +1,14 @@
+section.home-container {
+	width: 60%;
+	margin: 0px auto;
+	background: none;
+	margin-top: 20px;
+	padding: 10px;
+}
+
+section.home-container a.btn {
+	margin: 10px 15px;
+	padding: calc(20% - 15px) 0px;
+	width: calc(100% - 30px);
+	font-size: 25px; 
+}

@@ -16,7 +16,7 @@ def home(request):
 		if is_driver(request.user):
 			return redirect('group_selection_screen')
 		return redirect('pickup_locations')
-	return redirect('student_login')
+	return render(request, 'home.html', {})
 
 
 #Logging out is the same for drivers and students. Since they are
