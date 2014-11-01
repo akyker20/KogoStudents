@@ -33,11 +33,11 @@ class FunctionalTests(StaticLiveServerTestCase):
     def get_full_url(self, namespace):
         return "%s%s" % (self.live_server_url, reverse(namespace))
 
-    def test_admin_site(self):
-        # user opens web browser, navigates to admin page
-        self.browser.get(self.live_server_url + '/admin/')
-        body = self.browser.find_element_by_tag_name('body')
-        self.assertIn('Django administration', body.text)
+    # def test_admin_site(self):
+    #     # user opens web browser, navigates to admin page
+    #     self.browser.get(self.live_server_url + '/admin/')
+    #     body = self.browser.find_element_by_tag_name('body')
+    #     self.assertIn('Django administration', body.text)
 
     # Helper method to log in the student
     def student_login(self, student_email):
@@ -64,19 +64,22 @@ class FunctionalTests(StaticLiveServerTestCase):
     def select_location(self, loc):
         self.browser.find_element_by_xpath("//form[input/@value='%s']" % loc).submit()
 
-    def test_login_site(self):
-        # user opens web browser, navigates to the student login page
-        self.student_login('student1@duke.edu')
-        self.assertEqual(self.get_full_url('pickup_locations'), self.browser.current_url)
+    # def test_login_site(self):
+    #     # user opens web browser, navigates to the student login page
+    #     self.student_login('student1@duke.edu')
+    #     self.assertEqual(self.get_full_url('pickup_locations'), self.browser.current_url)
 
-    # Simulates the user logging in, and selected West Campus Bus Stop as pickup location
-    def test_request_pickup(self):
-        # user opens web browser, navigates to the student login page
-        self.student_login('student1@duke.edu')
-        pickup_loc = 'West Bus Stop'
-        self.select_location(pickup_loc)
-        title = self.browser.find_element_by_class_name('dropoff-title')
-        self.assertTrue(pickup_loc in title.text)
+    def logout_user(self):
+        self.browser.find_element_by_link_text('Logout').click()
+
+    # # Simulates the user logging in, and selected West Campus Bus Stop as pickup location
+    # def test_request_pickup(self):
+    #     # user opens web browser, navigates to the student login page
+    #     self.student_login('student1@duke.edu')
+    #     pickup_loc = 'West Bus Stop'
+    #     self.select_location(pickup_loc)
+    #     title = self.browser.find_element_by_class_name('dropoff-title')
+    #     self.assertTrue(pickup_loc in title.text)
 
     def request_ride(self, student_email, pickup_loc, dropoff_loc):
         self.student_login(student_email)
@@ -102,29 +105,31 @@ class FunctionalTests(StaticLiveServerTestCase):
             lambda driver: self.browser.find_element_by_tag_name('form'))
         self.browser.find_element_by_tag_name('form').submit()
 
-    def test_request_dropoff_loc(self):
-        pickup_loc = 'West Bus Stop'
-        dropoff_loc = 'East Bus Stop'
-        self.request_ride('student1@duke.edu', pickup_loc, dropoff_loc)
-        title = self.browser.find_element_by_class_name('request-summary-holder')
-        self.assertIn(pickup_loc, title.text)
-        self.assertIn(dropoff_loc, title.text)
-        self.verify_student_in_group(1)
+    # def test_request_dropoff_loc(self):
+    #     pickup_loc = 'West Bus Stop'
+    #     dropoff_loc = 'East Bus Stop'
+    #     self.request_ride('student1@duke.edu', pickup_loc, dropoff_loc)
+    #     title = self.browser.find_element_by_class_name('request-summary-holder')
+    #     self.assertIn(pickup_loc, title.text)
+    #     self.assertIn(dropoff_loc, title.text)
+    #     self.verify_student_in_group(1)
 
-    def test_cancel_request(self):
-        self.request_ride('student1@duke.edu', 'West Bus Stop', 'East Bus Stop')
-        self.browser.find_element_by_class_name('btn').click()
-        self.assertEqual(self.get_full_url('pickup_locations'), self.browser.current_url)
+    # def test_cancel_request(self):
+    #     self.request_ride('student1@duke.edu', 'West Bus Stop', 'East Bus Stop')
+    #     self.browser.find_element_by_class_name('btn').click()
+    #     self.assertEqual(self.get_full_url('pickup_locations'), self.browser.current_url)
 
-    def test_driver_login(self):
-        self.driver_login()
-        self.assertEqual(self.get_full_url('group_selection_screen'), self.browser.current_url)
+    # def test_driver_login(self):
+    #     self.driver_login()
+    #     self.assertEqual(self.get_full_url('group_selection_screen'), self.browser.current_url)
 
     def test_driver_accept_ride(self):
         self.request_ride('student1@duke.edu', 'West Bus Stop', 'East Bus Stop')
+        self.logout_user()
         self.login_driver_and_accept_first_group()
         self.assertEquals(self.get_full_url('ride_in_progress'), self.browser.current_url)
         self.assertEquals('Riding', self.browser.find_element_by_class_name('ride-in-progress').text)
+        self.logout_user()
         self.student_login('student1@duke.edu')
         self.assertEquals(self.get_full_url('wait_screen'), self.browser.current_url)
         self.assertEquals('Riding', self.browser.find_element_by_class_name('group-number').text)
@@ -132,15 +137,19 @@ class FunctionalTests(StaticLiveServerTestCase):
     def test_multiple_students_requesting_same_rides(self):
         self.request_ride('student1@duke.edu', 'West Bus Stop', 'East Bus Stop')
         self.verify_student_in_group(1)
+        self.logout_user()
         self.request_ride('student2@duke.edu', 'West Bus Stop', 'East Bus Stop')
         self.verify_student_in_group(1)
+        self.logout_user()
         self.login_driver_and_accept_first_group()
 
     def test_multiple_students_requesting_different_rides(self):
         self.request_ride('student1@duke.edu', 'West Bus Stop', 'East Bus Stop')
         self.verify_student_in_group(1)
+        self.logout_user()
         self.request_ride('student2@duke.edu', 'West Bus Stop', 'Anderson St.')
         self.verify_student_in_group(2)
+        self.logout_user()
         self.login_driver_and_accept_first_group()
         self.browser.find_element_by_class_name('end-ride').click()
         self.assertEquals(self.get_full_url('group_selection_screen'), self.browser.current_url)
