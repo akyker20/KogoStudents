@@ -1,18 +1,27 @@
 from django.core.urlresolvers import reverse
 from selenium import webdriver
+from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.contrib.auth.models import User
-from students.models import StudentProfile
+from students.models import StudentProfile, Location
 
 class FunctionalTests(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
+        location_names = ["West Bus Stop",
+                              "East Bus Stop",
+                              "Anderson St.",
+                              "Other"]
+        for loc in location_names:
+            new_loc = Location(name=loc)
+            new_loc.save()
         user = User.objects.create_user(username='net01@duke.edu', password='password01')
         StudentProfile.objects.create(user=user)
 
     def tearDown(self):
+        # Get rid of connection error.
         self.browser.refresh()
         self.browser.quit()
 
@@ -34,5 +43,8 @@ class FunctionalTests(StaticLiveServerTestCase):
         username_field.send_keys('net01@duke.edu')
         password_field = self.browser.find_element_by_name('password')
         password_field.send_keys('password01')
-        self.browser.find_element_by_class_name('btn').click()
+        self.browser.find_element_by_tag_name('form').submit()
+        # Wait until the response is received
+        # WebDriverWait(self.browser, 10).until(
+        #     lambda driver: self.browser.find_element_by_class_name('pickup-title'))
         self.assertEqual(self.get_full_url('pickup_locations'), self.browser.current_url)
