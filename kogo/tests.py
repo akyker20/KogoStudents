@@ -34,8 +34,8 @@ class FunctionalTests(StaticLiveServerTestCase):
     #     body = self.browser.find_element_by_tag_name('body')
     #     self.assertIn('Django administration', body.text)
 
-    def test_login_site(self):
-        # user opens web browser, navigates to the student login page
+    # Helper method to log in the user
+    def login(self):
         self.browser.get(self.get_full_url('student_login'))
         h1 = self.browser.find_element_by_tag_name('h1')
         self.assertIn('Student Login', h1.text)
@@ -43,8 +43,35 @@ class FunctionalTests(StaticLiveServerTestCase):
         username_field.send_keys('net01@duke.edu')
         password_field = self.browser.find_element_by_name('password')
         password_field.send_keys('password01')
-        self.browser.find_element_by_tag_name('form').submit()
-        # Wait until the response is received
-        # WebDriverWait(self.browser, 10).until(
-        #     lambda driver: self.browser.find_element_by_class_name('pickup-title'))
-        self.assertEqual(self.get_full_url('pickup_locations'), self.browser.current_url)
+        self.browser.find_element_by_class_name('btn').click()
+
+    def select_location(self, loc):
+        self.browser.find_element_by_xpath("//form[input/@value='%s']" % loc).submit()
+
+    # def test_login_site(self):
+    #     # user opens web browser, navigates to the student login page
+    #     self.login()
+    #     # Wait until the response is received
+    #     # WebDriverWait(self.browser, 10).until(
+    #     #     lambda driver: self.browser.find_element_by_class_name('pickup-title'))
+    #     self.assertEqual(self.get_full_url('pickup_locations'), self.browser.current_url)
+
+    # Simulates the user logging in, and selected West Campus Bus Stop as pickup location
+    def test_request_pickup(self):
+        # user opens web browser, navigates to the student login page
+        self.login()
+        pickup_loc = 'West Bus Stop'
+        self.select_location(pickup_loc)
+        title = self.browser.find_element_by_class_name('dropoff-title')
+        self.assertTrue(pickup_loc in title.text)
+
+    def test_request_dropoff_loc(self):
+        self.login()
+        pickup_loc = 'West Bus Stop'
+        dropoff_loc = 'East Bus Stop'
+        self.select_location(pickup_loc)
+        self.select_location(dropoff_loc)
+        title = self.browser.find_element_by_class_name('request-summary-holder')
+        self.assertTrue(pickup_loc in title.text and dropoff_loc in title.text)
+        group_num = self.browser.find_element_by_class_name('group-number').text
+        self.assertEqual(1, int(group_num))
