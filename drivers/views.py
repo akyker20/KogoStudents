@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 
 from decorators import require_driver, handle_riding_drivers
+from kogo.decorators import handle_authenticated_users
 from kogo.forms import AuthenticateForm
 from kogo.helper import is_driver
 from students.models import Location, RideGroup
@@ -15,6 +16,7 @@ from students.models import Location, RideGroup
 
 #A view to handle driver login. The view checks that the input
 #information is valid and that the user is a driver.
+@handle_authenticated_users
 def driver_login(request, auth_form=None):
 	#The driver is submitting the login form.
   	if request.method == 'POST':

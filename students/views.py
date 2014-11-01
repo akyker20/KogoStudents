@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 
 from decorators import require_student, handle_riding_and_waiting_students
+from kogo.decorators import handle_authenticated_users
 from kogo.forms import AuthenticateForm
 from kogo.helper import is_student
 from students.models import Location, Request, RideGroup, StudentProfile
@@ -25,6 +26,7 @@ def login_on_activation(sender, user, request, **kwargs):
 
 #A view to handle student login. The view checks that the input
 #information is valid and that the user is a student.
+@handle_authenticated_users
 def student_login(request):
 	form = AuthenticateForm()
   	if request.method == 'POST':

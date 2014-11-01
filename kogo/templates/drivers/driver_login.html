@@ -11,6 +11,7 @@
 	<h1>Driver Login</h1>
 	<form role="form" action="{{url}}" method="post">
     {% csrf_token %}
+    {{auth_form.non_field_errors}}
     <div class="form-group">
       <input id="id_username" name="username" placeholder="Username" type="text">
     </div>

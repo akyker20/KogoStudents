@@ -12,11 +12,7 @@ class StudentProfile(models.Model):
 	user = models.OneToOneField(User)
 	
 	def __unicode__(self):
-		return self.get_fullname()
-
-	#Returns the full name of the user.
-	def get_fullname(self):
-		return "%s %s" % (self.user.first_name, self.user.last_name)
+		return self.user.username
 
 	#Return true if the student is assigned to a group that is
 	#waiting on a ride.

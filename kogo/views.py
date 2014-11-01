@@ -1,8 +1,7 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-
-from kogo.helper import is_student, is_driver
+from decorators import handle_authenticated_users
 
 #The home view determines if the user is signed in. If the
 #user is not signed in, the user is redirected to the student
@@ -11,12 +10,8 @@ from kogo.helper import is_student, is_driver
 #group selection page and if the user is not a driver (the user
 #is a student), the user will be directed to the pickup locations
 #screen to begin making a request.
+@handle_authenticated_users
 def home(request):
-	if request.user.is_authenticated():
-		if is_driver(request.user):
-			return redirect('group_selection_screen')
-		elif is_student(request.user):
-			return redirect('pickup_locations')
 	return render(request, 'home.html', {})
 
 
