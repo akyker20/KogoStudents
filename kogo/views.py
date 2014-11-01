@@ -15,8 +15,8 @@ def home(request):
 	if request.user.is_authenticated():
 		if is_driver(request.user):
 			return redirect('group_selection_screen')
-    elif is_student(request.user):
-		  return redirect('pickup_locations')
+		elif is_student(request.user):
+			return redirect('pickup_locations')
 	return render(request, 'home.html', {})
 
 
