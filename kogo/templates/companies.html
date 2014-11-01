@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
+{% block navbar_content %}
+  <ul class="nav navbar-nav">
+    <li><a href="{% url 'student_login'%}">Student Login</a></li>
+  </ul>
+{% endblock %}
+
 {% block content %}
 <div class="content-body">
 	<div class="intro-container">
@@ -49,7 +55,7 @@
 					<h2 class="center"> 1¢ per Impact Second </h2>
 					<p>where an impact second is a second that a student spends watching your advertisment. We promise no billboards, no crowded rooms. We offer a unique opportunity to create an intimate connection with your college aged consumers.</p>
 				</div>
-				<ul class="sample-payment">
+				<ul class="sample-list">
 					<li class="active"><strong>Sample Payment Plan</strong></li>
 					<li>
 						Length of Ad
@@ -84,7 +90,7 @@
 							If you are interested in advertising your products and services through Kogo and would like to get in touch with us, you may contact us by email or phone. We can provide you with further information and answer any questions you may have. Ultimately, if you decide to work with us, we will set up a meeting at your location to make a deal. We strongly believe that we can increase the sales of your business, so let us help.
 					</p>
 				</div>
-				<ul class="sample-payment business-contact-list">
+				<ul class="sample-list business-contact-list">
 					<li class="active"><strong>Contact Info</strong></li>
 					<li>
 						Email
