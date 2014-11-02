@@ -2,55 +2,121 @@
 
 /* Business Informational Page */
 
-div.home-video-holder {
-	width: 100%;
-	margin: 100px auto 0px;
-	background-color: gray;
-	height: 650px;
-}
-
 div.intro-container {
-	margin-top: 25px;
+	color: white;
+	background: url(../../images/chapel-wide.jpg) no-repeat;
 	width: 100%;
-	height: 415px;
+	background-size: 100%;
+	height: 572px;
 }
 
 div.video-holder {
-	margin-top: 35px;
-	float: right;
+	margin: 35px 0px 0px 20px;
 	height: 300px;
-	width: 545px;
+	width: 520px;
 	background: gray;
+	opacity: 0.8;
+}
+
+ul.tweets-list {
+	overflow: auto;
+	list-style: none;
+	padding: 20px;
+	margin-bottom: 0px;
+}
+
+div.twitter-feed {
+	background: #33425a;
+	width: 100%;
+}
+
+div.twitter-image-holder {
+	overflow: auto;
+}
+
+img.twitter-profile-image {
+	float: left;
+	margin-right: 10px;
+}
+
+p.twitter-screen-name {
+	font-size: 18px;
+	margin-bottom: 1px;
+	font-weight: bold;
+}
+
+p.twitter-name {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+div.tweet-names-holder {
+	float: left;
+	width: 130px;
+}
+
+ul.tweets-list li {
+	width: 500px;
+	height: 70px;
+	float: left;
+	background: white;
+	border-radius: 10px;
+	padding: 10px;
+	margin-right: 17px;
+}
+
+div.glyphicon-chevron-right {
+	font-size: 65px;
+	color: white;
+	float: left;
+	margin-left: 45px;
+}
+
+ul.tweets-list li:last-child {
+	margin-right: 0px;
+}
+
+div.tweet-holder {
+	font-size: 0.9em;
+	float: left;
+	width: 280px;
+}
+
+
+
+img.android {
+	position: relative;
+	left: 340px;
+	width: 400px;
 }
 
 div.intro-text-container {
-	float: left;
+	margin-left: 20px;
 	width: 600px;
+	float: left;
+}
+
+div.intro-text-container h1 {
+	margin-top: 0px;
+	padding-top: 40px
 }
 
 div.intro-text-container h1 strong {
-	font-size: 50px;
+	font-size: 52px;
 }
 
 div.intro-text-container h1 p.lighter {
-	font-size: 31px;
-	margin-bottom: 5px;
-	font-family: 'Open Sans', sans-serif;
+	font-size: 26px;
 }
 
 div.intro-text-container p {
-	margin: 30px 0px;
 	font-size: 1.6em;
 	font-weight: 200;
 }
 
-div.intro-text-container p.small-info {
-	margin-top: 40px;
-}
-
 div.gray-container {
 	width: 100%;
-	background: rgba(211, 211, 211, 0.34);
+	background: black;
 	overflow: auto;
 }
 
@@ -66,40 +132,92 @@ div.home-icon-container {
 }
 
 div.three-step-container {
-	width: 1200px;
-	margin: 25px auto;
+	width: 1300px;
+	margin: 15px auto;
 	overflow: hidden;
-	opacity: 0.8;
+	color: white;
 }
 
 div.home-icon-container p {
 	font-size: 1.2em;
 }
 
-div.content-body {
-	width: 1200px;
-	margin: 0px auto;
-}
-
-div.price-info-wrapper {
-	padding-top: 30px;
-}
-
 div.price-info-container {
+	padding: 100px 200px;
+	width: 100%;
+	background-size: 100%;
+	background: white;
 	overflow: auto;
+}
+
+div.reasons-container {
+	padding: 100px 200px;
+	width: 100%;
+	background: #33425a;
+	color: white;
+}
+
+div.reasons-left-container {
+	margin-bottom: 50px;
+}
+
+div.reasons-container h1 {
+	font-size: 50px;
+}
+
+ul.reasons-list {
+	list-style: none;
+	font-size: 1.5em;
+	font-family: cursive;
+}
+
+ul.reasons-list li {
+	margin: 20px 0px;
+}
+
+div.left-container {
+	width: 550px;
+	float: left;
+	padding: 10px;
+}
+
+div.left-container h1 {
+	font-size: 50px;
+}
+
+.right {
+	float: right;
+}
+
+p.pricing-summary {
+	padding-bottom: 10px;
+	border-bottom: 5px solid green;
+	font-size: 1.5em;
+}
+
+p.pricing-details {
+	font-size: 1.2em;
+}
+
+div.right-container {
+	float: right;
+	width: 500px;
+	padding: 10px;
+}
+
+div.list-container {
+	float: right;
 }
 
 ul.sample-list {
 	list-style: none;
-	float: right;
 	padding-left: 0px;
-	margin-top: 95px;
-	width: 500px;
-	font-size: 20px;
+	font-size: 18px;
 }
 
-ul.sample-list strong {
-	font-size: 24px;
+ul.sample-list li.active {
+	font-size: 30px;
+	font-family: "Titillium Web",sans-serif;
 }
 
 ul.sample-list li {
@@ -108,12 +226,11 @@ ul.sample-list li {
 	padding-bottom: 10px;
 }
 
-div.business-contact-info strong {
-	font-size: 26px;
-}
-
-ul.business-contact-list {
-	margin-top: 150px;
+div.contact-info-wrapper {
+	background: url(../../images/chapel-btm.JPG) no-repeat;
+	width: 100%;
+	background-size: 100%;
+	height: 500px;
 }
 
 /* End Business Informational Page */

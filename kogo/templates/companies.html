@@ -1,13 +1,36 @@
 {% extends 'base.html' %}
 
+  {% block twitter_feed %}
+  <div class="twitter-feed">
+  	<ul class="tweets-list">
+  	{% for tweet in tweets %}
+  		<li class="shadow">
+				<div class="twitter-image-holder">
+					<img class="twitter-profile-image" src="{{tweet.user.profile_image_url}}">
+					<div class="tweet-names-holder">
+						<p class="twitter-screen-name">@{{tweet.user.screen_name}}</p>
+						<p class="twitter-name">{{tweet.user.name}}</p>
+					</div>
+					<div class="tweet-holder">
+						<font class="small">{{tweet.text}}</font>
+					</div>
+			</li>
+  	{% endfor %}
+  	  	<div class="glyphicon glyphicon-chevron-right" />
+  	</ul>
+  </div>
+
+
+  {% endblock %}
+
 {% block navbar_content %}
   <ul class="nav navbar-nav">
     <li><a href="{% url 'student_login'%}">Student Login</a></li>
+    <li><a href="{% url 'driver_login'%}">Driver Login</a></li>
   </ul>
 {% endblock %}
 
 {% block content %}
-<div class="content-body">
 	<div class="intro-container">
 		<div class="intro-text-container">
 			<h1>
@@ -18,14 +41,10 @@
 						University Students.
 					</strong>
 			</h1>
-			<p class="small-info">
-				Kogo is a reliable service that displays your advertisments to university students in a non-traditional way. No more billboards or video displays in crowded rooms. Our solution is the best way to convince students they need
-				your product.
-			</p>
+			<div class="video-holder shadow"></div>
 		</div>
-		<div class="video-holder"></div>
+		<img class="android" src="{{STATIC_URL}}images/android.png" />
 	</div>
-</div>
 
 <div class="gray-container">
 	<div class="three-step-container">
@@ -44,26 +63,33 @@
 	</div>
 </div>
 
-<div class="price-info-wrapper">
-	<div class="content-body">
 		<div class="price-info-container">
-				<div class="intro-text-container">
-					<h1><strong>Pricing</strong></h1>
-					<p>
-							Pricing is simple and painless. You give us an advertising segment and pay based on the number of students you want to see your ads. The price is:
-					</p>
-					<h2 class="center"> 1¢ per Impact Second </h2>
-					<p>where an impact second is a second that a student spends watching your advertisment. We promise no billboards, no crowded rooms. We offer a unique opportunity to create an intimate connection with your college aged consumers.</p>
-				</div>
+			<div class="left-container">
+				<h1>Pricing that makes sense</h1>
+				<p class="pricing-summary">
+						Pricing is simple and painless. You provide us with an advertisement and you only pay when we show
+						it to students.
+				</p>
+				<p class="pricing-details">
+					At Kogo, we charge you by the impact second. An impact second is one second that a student watches
+					your advertisement. This way your every penny goes towards a potential customer learning about your products and services.
+				</p>
+				<p class="pricing-details">
+					We are unique in that we can guarentee you that your advertisements are only being shown to your
+					potential customers and that you are only paying when they watch you ad. You won't find a more
+					efficient and cost-effective service on the market.
+				</p>
+			</div>
+			<div class='right-container'>
 				<ul class="sample-list">
-					<li class="active"><strong>Sample Payment Plan</strong></li>
+					<li class="active"><h1>Sample Payment Plan</h1></li>
 					<li>
 						Length of Ad
-						<span class="right">30 sec</span>
+						<span class="right"><strong>30 sec</strong></span>
 					</li>
 					<li>
 						# Students to Watch it
-						<span class="right">500</span>
+						<span class="right"><strong>500</strong></span>
 					</li>
 					<li>
 						Total Impact Seconds
@@ -75,21 +101,32 @@
 					</li>
 					<li>
 						Total Cost
-						<span class="right">$150</span>
+						<span class="right"><strong>$150</strong></span>
 					</li>
 				</ul>
-		</div>
+			</div>
+</div>
+
+<div class="reasons-container">
+	<div class="reason-left-container">
+		<h1>Why we're better than Print.</h1>
+		<ul class="reasons-list">
+			<li>Students are less likely to ignore your ads.</li>
+			<li>Students are in a good mood when they see your ads.</li>
+			<li>You only pay when students actually watch your ads.</li>
+		</ul>
 	</div>
 </div>
-<div class="price-info-wrapper">
-	<div class="content-body">
-		<div class="price-info-container">
+
+<div class="contact-info-wrapper">
+		<div class="contact-info-container">
 				<div class="intro-text-container">
-					<h1><strong>Interested in Growing Your Business?</strong></h1>
+					<h1><strong>Interested in Kogo?</strong></h1>
 					<p>
 							If you are interested in advertising your products and services through Kogo and would like to get in touch with us, you may contact us by email or phone. We can provide you with further information and answer any questions you may have. Ultimately, if you decide to work with us, we will set up a meeting at your location to make a deal. We strongly believe that we can increase the sales of your business, so let us help.
 					</p>
 				</div>
+				<div class="right-container">
 				<ul class="sample-list business-contact-list">
 					<li class="active"><strong>Contact Info</strong></li>
 					<li>
@@ -101,8 +138,8 @@
 						<span class="right">317-979-7549</span>
 					</li>
 				</ul>
+			</div>
 		</div>
-	</div>
 </div>
 
 {% endblock %}

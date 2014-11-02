@@ -11,6 +11,10 @@ div.home-video-holder {
 	background-color: gray;
 }
 
+div.twitter-feed {
+	display: none;
+}
+
 div.intro-container {
 	margin-top: 25px;
 	width: 100%;
