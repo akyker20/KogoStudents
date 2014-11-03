@@ -2,18 +2,17 @@
 
 /* Business Informational Page */
 
-div.intro-container {
-	color: white;
-	background: url(../../images/chapel-wide.jpg) no-repeat;
+section.intro {
+	background: white;
 	width: 100%;
 	background-size: 100%;
-	height: 572px;
+	height: 690px;
 }
 
 div.video-holder {
-	margin: 35px 0px 0px 20px;
+	margin: 35px 0px 0px 0px;
 	height: 300px;
-	width: 520px;
+	width: 580px;
 	background: gray;
 	opacity: 0.8;
 }
@@ -21,13 +20,15 @@ div.video-holder {
 ul.tweets-list {
 	overflow: auto;
 	list-style: none;
-	padding: 20px;
+	padding: 10px;
 	margin-bottom: 0px;
 }
 
 div.twitter-feed {
-	background: #33425a;
 	width: 100%;
+	position: fixed;
+	background: white;
+	z-index: 10;
 }
 
 div.twitter-image-holder {
@@ -57,19 +58,17 @@ div.tweet-names-holder {
 
 ul.tweets-list li {
 	width: 500px;
-	height: 70px;
 	float: left;
 	background: white;
-	border-radius: 10px;
 	padding: 10px;
 	margin-right: 17px;
 }
 
 div.glyphicon-chevron-right {
 	font-size: 65px;
-	color: white;
+	color: LightGray;
 	float: left;
-	margin-left: 45px;
+	margin-left: 50px;
 }
 
 ul.tweets-list li:last-child {
@@ -85,31 +84,34 @@ div.tweet-holder {
 
 
 img.android {
-	position: relative;
-	left: 340px;
-	width: 400px;
+	float: right;
+	width: 500px;
 }
 
-div.intro-text-container {
-	margin-left: 20px;
+div.intro-left-container {
 	width: 600px;
 	float: left;
 }
 
-div.intro-text-container h1 {
+div.intro-left-container h1 {
 	margin-top: 0px;
 	padding-top: 40px
 }
 
-div.intro-text-container h1 strong {
+div.intro-left-container h1 strong {
 	font-size: 52px;
 }
 
-div.intro-text-container h1 p.lighter {
+div.intro-info-container {
+	width: 1200px;
+	margin: 0px auto;
+}
+
+div.intro-left-container h1 p.lighter {
 	font-size: 26px;
 }
 
-div.intro-text-container p {
+div.intro-left-container p {
 	font-size: 1.6em;
 	font-weight: 200;
 }
@@ -155,10 +157,22 @@ div.reasons-container {
 	width: 100%;
 	background: #33425a;
 	color: white;
+	overflow: auto;
 }
 
 div.reasons-left-container {
 	margin-bottom: 50px;
+	float: left;
+	width: 600px;
+}
+
+div.reasons-video {
+	margin: 35px 0px 0px 20px;
+	height: 270px;
+	width: 480px;
+	background: gray;
+	opacity: 0.8;
+	float: right;
 }
 
 div.reasons-container h1 {
@@ -166,9 +180,8 @@ div.reasons-container h1 {
 }
 
 ul.reasons-list {
-	list-style: none;
-	font-size: 1.5em;
-	font-family: cursive;
+	list-style: decimal;
+	font-size: 1.2em;
 }
 
 ul.reasons-list li {
@@ -192,6 +205,12 @@ div.left-container h1 {
 p.pricing-summary {
 	padding-bottom: 10px;
 	border-bottom: 5px solid green;
+	font-size: 1.5em;
+}
+
+p.reasons-summary {
+	padding-bottom: 10px;
+	border-bottom: 5px solid gray;
 	font-size: 1.5em;
 }
 
@@ -227,10 +246,33 @@ ul.sample-list li {
 }
 
 div.contact-info-wrapper {
-	background: url(../../images/chapel-btm.JPG) no-repeat;
+	background: white;
 	width: 100%;
 	background-size: 100%;
-	height: 500px;
+}
+
+div.contact-info-container {
+	padding: 40px;
+	text-align: center;
+	padding-bottom: 140px;
+}
+
+div.contact-info-container h1.lg {
+	font-size: 60px;
+}
+
+
+p.contact-summary {
+	margin: 0px auto;
+	text-align: center;
+	padding-bottom: 10px;
+	border-bottom: 5px solid green;
+	font-size: 1.5em;
+	width: 500px;
+}
+
+img.bottom {
+	width: 100%;
 }
 
 /* End Business Informational Page */

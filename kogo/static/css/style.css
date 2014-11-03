@@ -44,6 +44,8 @@ span.glyphicon-remove {
 
 nav.navbar.navbar-inverse {
 	margin-bottom: 0px;
+	background-color: black;
+	border-color: black;
 }
 
 ul.nav li {

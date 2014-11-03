@@ -1,6 +1,52 @@
 {% extends 'base.html' %}
 
-  {% block twitter_feed %}
+{% block navbar_content %}
+  <ul class="nav navbar-nav">
+    <li><a href="{% url 'student_login'%}">Student Login</a></li>
+    <li><a href="{% url 'driver_login'%}">Driver Login</a></li>
+  </ul>
+{% endblock %}
+
+{% block content %}
+	<section class="intro">
+		<div class="intro-info-container">
+			<div class="intro-left-container">
+				<h1>
+					<p class="lighter">
+						Easily advertise your products and services to one of your largest consumers: 
+					</p>
+						<strong>
+							University Students.
+						</strong>
+				</h1>
+				<div class="video-holder shadow"></div>
+				<h1 class="lighter">
+					<p class="lighter">
+						Students love our service, our goal is to make them love yours.
+					</p>
+				</h1>
+			</div>
+			<img class="android" src="{{STATIC_URL}}images/android.png" />
+	</div>
+	</section>
+
+<div class="gray-container">
+	<div class="three-step-container">
+		<div class="home-icon-container">
+			<p>You give us an advertisement.</p>
+			<span class="glyphicon glyphicon-film"></span>
+		</div>
+		<div class="home-icon-container">
+			<p>We show students.</p>
+			<span class="glyphicon glyphicon-user"></span>
+		</div>
+		<div class="home-icon-container">
+			<p>Students buy your products.</p>
+			<span class="glyphicon glyphicon-usd green"></span>
+		</div>
+	</div>
+</div>
+
   <div class="twitter-feed">
   	<ul class="tweets-list">
   	{% for tweet in tweets %}
@@ -19,49 +65,6 @@
   	  	<div class="glyphicon glyphicon-chevron-right" />
   	</ul>
   </div>
-
-
-  {% endblock %}
-
-{% block navbar_content %}
-  <ul class="nav navbar-nav">
-    <li><a href="{% url 'student_login'%}">Student Login</a></li>
-    <li><a href="{% url 'driver_login'%}">Driver Login</a></li>
-  </ul>
-{% endblock %}
-
-{% block content %}
-	<div class="intro-container">
-		<div class="intro-text-container">
-			<h1>
-				<p class="lighter">
-					Easily advertise your products and services to one of your largest consumers: 
-				</p>
-					<strong>
-						University Students.
-					</strong>
-			</h1>
-			<div class="video-holder shadow"></div>
-		</div>
-		<img class="android" src="{{STATIC_URL}}images/android.png" />
-	</div>
-
-<div class="gray-container">
-	<div class="three-step-container">
-		<div class="home-icon-container">
-			<p>You give us an advertisement.</p>
-			<span class="glyphicon glyphicon-film"></span>
-		</div>
-		<div class="home-icon-container">
-			<p>We show students.</p>
-			<span class="glyphicon glyphicon-user"></span>
-		</div>
-		<div class="home-icon-container">
-			<p>Students buy your products.</p>
-			<span class="glyphicon glyphicon-usd green"></span>
-		</div>
-	</div>
-</div>
 
 		<div class="price-info-container">
 			<div class="left-container">
@@ -108,38 +111,30 @@
 </div>
 
 <div class="reasons-container">
-	<div class="reason-left-container">
+	<div class="reasons-left-container">
 		<h1>Why we're better than Print.</h1>
+		<p class="reasons-summary">
+			Students love our service, our goal is to make them love yours.
+			There are several reasons why we're your best option.
+		</p>
 		<ul class="reasons-list">
 			<li>Students are less likely to ignore your ads.</li>
 			<li>Students are in a good mood when they see your ads.</li>
 			<li>You only pay when students actually watch your ads.</li>
 		</ul>
 	</div>
+	<div class="reasons-video shadow"></div>
 </div>
 
 <div class="contact-info-wrapper">
 		<div class="contact-info-container">
-				<div class="intro-text-container">
-					<h1><strong>Interested in Kogo?</strong></h1>
-					<p>
-							If you are interested in advertising your products and services through Kogo and would like to get in touch with us, you may contact us by email or phone. We can provide you with further information and answer any questions you may have. Ultimately, if you decide to work with us, we will set up a meeting at your location to make a deal. We strongly believe that we can increase the sales of your business, so let us help.
-					</p>
-				</div>
-				<div class="right-container">
-				<ul class="sample-list business-contact-list">
-					<li class="active"><strong>Contact Info</strong></li>
-					<li>
-						Email
-						<span class="right">businesses.kogoads@gmail.com</span>
-					</li>
-					<li>
-						Phone Number
-						<span class="right">317-979-7549</span>
-					</li>
-				</ul>
-			</div>
+				<h1 class="lg">Give Kogo a try?</h1>
+				<p class="contact-summary">
+					If you're interested in growing your business with us
+					or have questions, let's get in touch.
+				</p>
+				<h1>kogoadvertising@gmail.com</h1>
+				<h1>317-938-8461</h1>
 		</div>
 </div>
-
 {% endblock %}
