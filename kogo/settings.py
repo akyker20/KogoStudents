@@ -60,6 +60,17 @@ ROOT_URLCONF = 'kogo.urls'
 
 WSGI_APPLICATION = 'kogo.wsgi.application'
 
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = '=t)4-du+lvmfwdo8jv1if49=nx0$^hypk#bhc#_ig1b=ajm==r'
+
+
+# Twitter stuff
+APP_KEY = 'RrqLed3fuoEOFwU0rVBcgnokL'
+APP_SECRET = 'yvDMzSHDdqk5xySQ39QKo9VlvklIxfrwOl1IXng3YQPv7BhiL0'
+from twython import Twython
+twitter = Twython(APP_KEY, APP_SECRET, oauth_version=2)
+ACCESS_TOKEN = twitter.obtain_access_token()
+
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
