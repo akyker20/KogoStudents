@@ -42,10 +42,14 @@ span.glyphicon-remove {
 
 /* Navbar styling */
 
+div.navbar-header a.navbar-brand {
+	color: white;
+}
+
 nav.navbar.navbar-inverse {
 	margin-bottom: 0px;
-	background-color: black;
-	border-color: black;
+	background-color: #5ED84C;
+	border-color: #5ED84C;
 }
 
 ul.nav li {

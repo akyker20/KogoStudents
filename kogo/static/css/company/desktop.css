@@ -118,7 +118,7 @@ div.intro-left-container p {
 
 div.gray-container {
 	width: 100%;
-	background: black;
+	background: #5ED84C;
 	overflow: auto;
 }
 
@@ -134,14 +134,14 @@ div.home-icon-container {
 }
 
 div.three-step-container {
-	width: 1300px;
+	width: 1315px;
 	margin: 15px auto;
 	overflow: hidden;
 	color: white;
 }
 
 div.home-icon-container p {
-	font-size: 1.2em;
+	font-size: 1.3em;
 }
 
 div.price-info-container {
@@ -155,7 +155,7 @@ div.price-info-container {
 div.reasons-container {
 	padding: 100px 200px;
 	width: 100%;
-	background: #33425a;
+	background: #469E3A;
 	color: white;
 	overflow: auto;
 }
@@ -181,7 +181,8 @@ div.reasons-container h1 {
 
 ul.reasons-list {
 	list-style: decimal;
-	font-size: 1.2em;
+	font-size: 1.3em;
+	font-family: cursive;
 }
 
 ul.reasons-list li {
@@ -204,13 +205,13 @@ div.left-container h1 {
 
 p.pricing-summary {
 	padding-bottom: 10px;
-	border-bottom: 5px solid green;
+	border-bottom: 5px solid #5ED84C;
 	font-size: 1.5em;
 }
 
 p.reasons-summary {
 	padding-bottom: 10px;
-	border-bottom: 5px solid gray;
+	border-bottom: 5px solid #5ED84C;
 	font-size: 1.5em;
 }
 
@@ -266,7 +267,7 @@ p.contact-summary {
 	margin: 0px auto;
 	text-align: center;
 	padding-bottom: 10px;
-	border-bottom: 5px solid green;
+	border-bottom: 5px solid #5ED84C;
 	font-size: 1.5em;
 	width: 500px;
 }
