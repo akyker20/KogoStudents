@@ -2,19 +2,15 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from decorators import handle_authenticated_users
-from twython import Twython
 from django.conf import settings
 
-#The home view determines if the user is signed in. If the
-#user is not signed in, the user is redirected to the student
-#sign in (most users will be students). If the user is signed
-#in, if the user is a driver the user will be directed to the
-#group selection page and if the user is not a driver (the user
-#is a student), the user will be directed to the pickup locations
-#screen to begin making a request.
+# If the user is authenticated and they are a driver they are taken to 
+# the group selection page. If the user is authenticated and they
+# are a student than they are taken to the pickup locations page. Otherwise
+# they are redirected to the student login page.
 @handle_authenticated_users
 def home(request):
-	return render(request, 'home.html', {})
+	return redirect('student_login')
 
 
 #Logging out is the same for drivers and students. Since they are
@@ -23,15 +19,6 @@ def home(request):
 def logout_user(request):
   logout(request)
   return redirect('home')
-
-
-def companies(request):
-  twitter = Twython(settings.APP_KEY, access_token=settings.ACCESS_TOKEN)
-  user_timeline = twitter.get_user_timeline(screen_name='KogoAds', count=3)
-  tweets = []
-  for tweet in user_timeline:
-    tweets.append(tweet)
-  return render(request, 'companies.html', { "tweets": tweets })
 
 
 from registration.backends.default.views import RegistrationView

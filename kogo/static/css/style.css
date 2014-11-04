@@ -48,8 +48,8 @@ div.navbar-header a.navbar-brand {
 
 nav.navbar.navbar-inverse {
 	margin-bottom: 0px;
-	background-color: #5ED84C;
-	border-color: #5ED84C;
+	background-color: black;
+	border-color: black;
 }
 
 ul.nav li {
