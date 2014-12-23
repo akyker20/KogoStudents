@@ -10,7 +10,8 @@ from django.conf import settings
 # they are redirected to the student login page.
 @handle_authenticated_users
 def home(request):
-	return redirect('student_login')
+	# return redirect('student_login')
+  return render(request, 'not_ready.html', {})
 
 
 #Logging out is the same for drivers and students. Since they are
