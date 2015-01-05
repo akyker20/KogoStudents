@@ -1,5 +1,5 @@
 #The purpose of this views file is to define all of the student views.
-
+from decimal import Decimal
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -41,6 +41,16 @@ def get_location_groups(request):
 		context = {'location': location, 'groups': groups}
 		html = render_to_string('drivers/location_groups.html', context)
 		return HttpResponse(html)
+
+@login_required
+@require_driver
+def update_driver_loc(request):
+	if request.is_ajax() and request.method == "POST":
+		driver = request.user.driverprofile
+		driver.latitude = Decimal(request.POST['lat'])
+		driver.longitude = Decimal(request.POST['long'])
+		driver.save()
+	return HttpResponse('success')
 
 
 #This screen shows the groups that are waiting at the driver's base location.

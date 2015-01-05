@@ -8,4 +8,6 @@ urlpatterns = patterns('',
     url(r'^cancel_request$', 'students.views.cancel_request', name='cancel_request'),
     url(r'^wait_screen$', 'students.views.wait_screen', name='wait_screen'),
     url(r'^get_group_number$', 'students.views.get_group_number', name='get_group_number'),
+    url(r'^map$', 'students.views.map', name='map'),
+    url(r'^get_driver_locs', 'students.views.get_driver_locs'),
 )

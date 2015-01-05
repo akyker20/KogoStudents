@@ -1,21 +1,22 @@
 #The purpose of this views file is to define all of the student views.
-
+from datetime import datetime, timedelta
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
+import json as simplejson
 
 from decorators import require_student, handle_riding_and_waiting_students
 from kogo.decorators import handle_authenticated_users
 from kogo.forms import AuthenticateForm
 from kogo.helper import is_student
 from students.models import Location, Request, RideGroup, StudentProfile
+from drivers.models import DriverProfile
 
 from django.dispatch import receiver
 from registration.signals import user_activated
-
 
 @receiver(user_activated)
 def login_on_activation(sender, user, request, **kwargs):
@@ -33,8 +34,29 @@ def student_login(request):
 		form = AuthenticateForm(data=request.POST)
 		if form.is_valid() and is_student(form.get_user()):
 			login(request, form.get_user())
-			return redirect('pickup_locations')
+			return redirect('map')
   	return render(request,'students/student_login.html', {'auth_form': form})
+
+
+@login_required
+@require_student
+def get_driver_locs(request):
+	if request.is_ajax() and request.method == 'GET':
+		active_drivers = DriverProfile.objects.filter(modified__gte=datetime.now()-timedelta(minutes=1))
+		json = []
+		for driver in active_drivers:
+			driverJson = {'name': driver.__unicode__(),
+						  'lat':"{}".format(driver.latitude),
+						  'long': "{}".format(driver.longitude) }
+			json.append(driverJson)
+		dump = simplejson.dumps(json)
+		return HttpResponse(dump, content_type='application/json')
+
+@login_required
+@require_student
+@handle_riding_and_waiting_students
+def map(request):
+	return render(request, 'students/map_view.html', {})
 
 
 #If the user is logged in, the user is a student, and that student is
@@ -74,7 +96,7 @@ def request_ride(request):
 		dropoff = Location.objects.get(name=request.POST["dropoff"])
 		student.make_request(pickup, dropoff)
 		return redirect('wait_screen')
-	return redirect('pickup_locations')
+	return redirect('map')
 
 
 #If the user is logged in, and the user is a student, and the student
@@ -87,7 +109,7 @@ def cancel_request(request):
 		student = request.user.studentprofile
 		if student.is_waiting_in_group():
 			student.remove_recent_request()
-	return redirect('pickup_locations')
+	return redirect('map')
 
 
 #If the user is logged in, and the user is a student, the wait screen
